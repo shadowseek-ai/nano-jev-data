@@ -21,8 +21,11 @@ pip install openai opencc-python-reimplemented
 | `LLM_GEN_LANGS` | 源语言（默认 `zh-Hans`，即只生成简体，其余语言靠翻译） |
 | `LLM_PER_TASK` | 每（垂类, 任务, 语言）的目标条数；不设则按配额自动折算 |
 
-> 凭据、网关与模型名只走环境变量：仓库内不写死任何网关地址、模型名或 API key，`.gitignore` 已排除
-> `.env`、`*.log`、`*_state.json`、`seeds*/`、`artifacts/`。
+## 敏感信息
+
+- 凭据、网关与模型名只从环境变量读取：不写死、不落盘、不打印，缺失时报错只提示变量名。
+- 错误日志只记录异常类型与消息（截断 120 字符），不输出请求头、key 或完整响应体。
+- `.gitignore` 已排除 `.env*`、`secrets/`、`*.key`、`*.pem`、`*.log`、`*_state.json`、`*.cursor.json`、`seeds*/`、`artifacts/`。
 
 ## 流水线顺序
 
