@@ -1,0 +1,423 @@
+{
+  "category": "embodied_game_ops",
+  "languages": [
+    "zh-Hans",
+    "en",
+    "zh-Hant",
+    "ru",
+    "ko",
+    "ja",
+    "ar",
+    "bo"
+  ],
+  "tasks": [
+    {
+      "id": "npc_action_select",
+      "title": "NPC 行为决策",
+      "questions": {
+        "engage_player": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "这个 NPC 是否应当交战？"
+            ],
+            "en": [
+              "Should this NPC engage?"
+            ],
+            "zh-Hant": [
+              "這個 NPC 是否應當交戰？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "交战",
+              "false": "不交战"
+            },
+            "en": {
+              "true": "engage",
+              "false": "do not engage"
+            },
+            "zh-Hant": {
+              "true": "交戰",
+              "false": "不交戰"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "action": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "下一步应执行哪个动作？"
+            ],
+            "en": [
+              "Which action comes next?"
+            ],
+            "zh-Hant": [
+              "下一步應執行哪個動作？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "patrol": "继续巡逻",
+              "retreat": "后撤到掩体",
+              "assist_ally": "支援倒地队友",
+              "engage": "主动交战",
+              "use_item": "使用治疗道具"
+            },
+            "en": {
+              "patrol": "keep patrolling",
+              "retreat": "retreat to cover",
+              "assist_ally": "assist the downed ally",
+              "engage": "engage the player",
+              "use_item": "use a healing item"
+            },
+            "zh-Hant": {
+              "patrol": "繼續巡邏",
+              "retreat": "後撤到掩體",
+              "assist_ally": "支援倒地隊友",
+              "engage": "主動交戰",
+              "use_item": "使用治療道具"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "threat_band": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "当前威胁档位是？"
+            ],
+            "en": [
+              "What is the current threat band?"
+            ],
+            "zh-Hant": [
+              "當前威脅檔位是？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "平静",
+              "警戒",
+              "紧张",
+              "危急"
+            ],
+            "en": [
+              "calm",
+              "alert",
+              "tense",
+              "critical"
+            ],
+            "zh-Hant": [
+              "平靜",
+              "警戒",
+              "緊張",
+              "危急"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    },
+    {
+      "id": "robot_task_route",
+      "title": "具身设备任务路由",
+      "questions": {
+        "human_handoff": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "是否需要人工接管？"
+            ],
+            "en": [
+              "Does this need a human to take over?"
+            ],
+            "zh-Hant": [
+              "是否需要人工接管？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "人工接管",
+              "false": "自动执行"
+            },
+            "en": {
+              "true": "hand off",
+              "false": "run autonomously"
+            },
+            "zh-Hant": {
+              "true": "人工接管",
+              "false": "自動執行"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "route_target": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "任务应路由到哪个工位？"
+            ],
+            "en": [
+              "Which station should the task go to?"
+            ],
+            "zh-Hant": [
+              "任務應路由到哪個工位？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "pick_place": "抓取放置",
+              "inspection": "巡检复核",
+              "delivery": "配送到站",
+              "charging": "回桩充电",
+              "maintenance": "停机检修"
+            },
+            "en": {
+              "pick_place": "pick and place",
+              "inspection": "inspection round",
+              "delivery": "station delivery",
+              "charging": "return to dock and charge",
+              "maintenance": "stop for maintenance"
+            },
+            "zh-Hant": {
+              "pick_place": "抓取放置",
+              "inspection": "巡檢複核",
+              "delivery": "配送到站",
+              "charging": "回樁充電",
+              "maintenance": "停機檢修"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "urgency": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "紧急度如何？"
+            ],
+            "en": [
+              "How urgent is it?"
+            ],
+            "zh-Hant": [
+              "緊急度如何？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "常规",
+              "稍急",
+              "紧急",
+              "特急"
+            ],
+            "en": [
+              "routine",
+              "soon",
+              "urgent",
+              "critical"
+            ],
+            "zh-Hant": [
+              "常規",
+              "稍急",
+              "緊急",
+              "特急"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    },
+    {
+      "id": "game_event_escalation",
+      "title": "对局事件升级判断",
+      "questions": {
+        "escalate_event": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "这个事件是否需要升级处理？"
+            ],
+            "en": [
+              "Should this event be escalated?"
+            ],
+            "zh-Hant": [
+              "這個事件是否需要升級處理？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "升级",
+              "false": "不升级"
+            },
+            "en": {
+              "true": "escalate",
+              "false": "do not escalate"
+            },
+            "zh-Hant": {
+              "true": "升級",
+              "false": "不升級"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "event_type": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "事件属于哪一类？"
+            ],
+            "en": [
+              "Which event class is it?"
+            ],
+            "zh-Hant": [
+              "事件屬於哪一類？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "none": "无异常",
+              "pvp_conflict": "竞技冲突",
+              "economy_anomaly": "经济数值异常",
+              "exploit_attempt": "利用漏洞",
+              "toxic_behavior": "辱骂骚扰"
+            },
+            "en": {
+              "none": "nothing anomalous",
+              "pvp_conflict": "competitive conflict",
+              "economy_anomaly": "economy anomaly",
+              "exploit_attempt": "exploit attempt",
+              "toxic_behavior": "abusive behaviour"
+            },
+            "zh-Hant": {
+              "none": "無異常",
+              "pvp_conflict": "競技衝突",
+              "economy_anomaly": "經濟數值異常",
+              "exploit_attempt": "利用漏洞",
+              "toxic_behavior": "辱罵騷擾"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "severity": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "严重度如何？"
+            ],
+            "en": [
+              "How severe is it?"
+            ],
+            "zh-Hant": [
+              "嚴重度如何？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "轻微",
+              "一般",
+              "严重",
+              "严重且扩散"
+            ],
+            "en": [
+              "minor",
+              "moderate",
+              "severe",
+              "severe and spreading"
+            ],
+            "zh-Hant": [
+              "輕微",
+              "一般",
+              "嚴重",
+              "嚴重且擴散"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    }
+  ],
+  "inject": {
+    "missing": 1
+  }
+}

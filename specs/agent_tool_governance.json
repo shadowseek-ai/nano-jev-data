@@ -1,0 +1,426 @@
+{
+  "category": "agent_tool_governance",
+  "languages": [
+    "zh-Hans",
+    "en",
+    "zh-Hant",
+    "ru",
+    "ko",
+    "ja",
+    "ar",
+    "bo"
+  ],
+  "tasks": [
+    {
+      "id": "agent_tool_gate",
+      "title": "工具调用前的风险门控",
+      "questions": {
+        "allow_execution": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "该工具调用是否应当直接放行？",
+              "按现有证据，是否允许执行这次调用？"
+            ],
+            "en": [
+              "Should this tool call be allowed to run now?",
+              "Given the evidence, may the call proceed?"
+            ],
+            "zh-Hant": [
+              "該工具調用是否應當直接放行？",
+              "按現有證據，是否允許執行這次調用？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "直接放行",
+              "false": "拦截待批"
+            },
+            "en": {
+              "true": "allow",
+              "false": "hold"
+            },
+            "zh-Hant": {
+              "true": "直接放行",
+              "false": "攔截待批"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "risk_class": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "这次调用属于哪一类风险？"
+            ],
+            "en": [
+              "Which risk class does this call fall into?"
+            ],
+            "zh-Hant": [
+              "這次調用屬於哪一類風險？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "none": "无副作用",
+              "read_only": "只读",
+              "write_data": "写数据",
+              "prod_change": "改生产配置",
+              "destructive": "破坏性操作"
+            },
+            "en": {
+              "none": "no side effect",
+              "read_only": "read only",
+              "write_data": "writes data",
+              "prod_change": "changes production config",
+              "destructive": "destructive"
+            },
+            "zh-Hant": {
+              "none": "無副作用",
+              "read_only": "唯讀",
+              "write_data": "寫資料",
+              "prod_change": "改生產配置",
+              "destructive": "破壞性操作"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "blast_radius": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "一旦出错，影响半径有多大？"
+            ],
+            "en": [
+              "If it goes wrong, how wide is the blast radius?"
+            ],
+            "zh-Hant": [
+              "一旦出錯，影響半徑有多大？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "单个对象",
+              "单个服务",
+              "多个服务",
+              "全站"
+            ],
+            "en": [
+              "single object",
+              "one service",
+              "several services",
+              "whole platform"
+            ],
+            "zh-Hant": [
+              "單一物件",
+              "單一服務",
+              "多個服務",
+              "全站"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    },
+    {
+      "id": "data_change_approval",
+      "title": "数据表变更的放行判断",
+      "questions": {
+        "approve_change": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "这次表变更是否应当批准？"
+            ],
+            "en": [
+              "Should this table change be approved?"
+            ],
+            "zh-Hant": [
+              "這次表變更是否應當批准？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "批准",
+              "false": "退回补充"
+            },
+            "en": {
+              "true": "approve",
+              "false": "send back"
+            },
+            "zh-Hant": {
+              "true": "批准",
+              "false": "退回補充"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "change_type": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "变更属于哪一类？"
+            ],
+            "en": [
+              "What kind of change is it?"
+            ],
+            "zh-Hant": [
+              "變更屬於哪一類？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "index_only": "只加索引",
+              "add_column": "新增可空列",
+              "type_change": "改列类型",
+              "backfill": "历史数据回填",
+              "drop_column": "删除列"
+            },
+            "en": {
+              "index_only": "adds an index",
+              "add_column": "adds a nullable column",
+              "type_change": "changes a column type",
+              "backfill": "backfills historical rows",
+              "drop_column": "drops a column"
+            },
+            "zh-Hant": {
+              "index_only": "只加索引",
+              "add_column": "新增可空欄",
+              "type_change": "改欄位型別",
+              "backfill": "歷史資料回填",
+              "drop_column": "刪除欄位"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "impact_level": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "影响等级如何？"
+            ],
+            "en": [
+              "What is the impact level?"
+            ],
+            "zh-Hant": [
+              "影響等級如何？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "低",
+              "中",
+              "高",
+              "严重"
+            ],
+            "en": [
+              "low",
+              "medium",
+              "high",
+              "severe"
+            ],
+            "zh-Hant": [
+              "低",
+              "中",
+              "高",
+              "嚴重"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    },
+    {
+      "id": "agent_task_route",
+      "title": "多 Agent 任务分发与路由",
+      "questions": {
+        "needs_orchestrator": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "是否需要编排器介入？"
+            ],
+            "en": [
+              "Does this need the orchestrator to step in?"
+            ],
+            "zh-Hant": [
+              "是否需要編排器介入？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "需要编排",
+              "false": "直接分发"
+            },
+            "en": {
+              "true": "orchestrate",
+              "false": "dispatch directly"
+            },
+            "zh-Hant": {
+              "true": "需要編排",
+              "false": "直接分發"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "target_agent": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "应当路由给谁？"
+            ],
+            "en": [
+              "Who should it be routed to?"
+            ],
+            "zh-Hant": [
+              "應當路由給誰？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "retrieval_agent": "检索体",
+              "analysis_agent": "分析体",
+              "ops_agent": "运维执行体",
+              "human_review": "人工复核",
+              "orchestrator": "编排器"
+            },
+            "en": {
+              "retrieval_agent": "retrieval agent",
+              "analysis_agent": "analysis agent",
+              "ops_agent": "ops agent",
+              "human_review": "human reviewer",
+              "orchestrator": "orchestrator"
+            },
+            "zh-Hant": {
+              "retrieval_agent": "檢索體",
+              "analysis_agent": "分析體",
+              "ops_agent": "運維執行體",
+              "human_review": "人工複核",
+              "orchestrator": "編排器"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "priority": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "优先级如何？"
+            ],
+            "en": [
+              "What priority?"
+            ],
+            "zh-Hant": [
+              "優先級如何？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "低",
+              "普通",
+              "高",
+              "紧急"
+            ],
+            "en": [
+              "low",
+              "normal",
+              "high",
+              "urgent"
+            ],
+            "zh-Hant": [
+              "低",
+              "普通",
+              "高",
+              "緊急"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    }
+  ],
+  "inject": {
+    "missing": 1
+  }
+}
