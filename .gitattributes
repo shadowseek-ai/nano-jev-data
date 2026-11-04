@@ -1,0 +1,15 @@
+# 数据集文件带 sha256 校验（MANIFEST.json），换行被改写会让校验失败：
+# 关闭一切自动换行转换，按字节原样存储与检出。
+* -text
+
+# 文本类文件统一 LF（与生成侧一致），避免跨平台差异
+*.py text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.txt text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.sh text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
