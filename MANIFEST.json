@@ -4,7 +4,8 @@
   "generator": "nano-jev-synth/1",
   "seed": null,
   "frozen_at": "2026-11-04T10:46:20+00:00",
-  "note": "三语对齐数据集：每垂类每语言 train>=2000 / test>=500题 / post>=200题，已去重",
+  "note": "三语对齐数据集：每垂类每语言 train>=2000 / test>=500题 / post>=200题，已去重；MIT 许可",
+  "license": "MIT",
   "root": "data",
   "splits": {
     "train": {
