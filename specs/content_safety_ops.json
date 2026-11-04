@@ -1,0 +1,429 @@
+{
+  "category": "content_safety_ops",
+  "languages": [
+    "zh-Hans",
+    "en",
+    "zh-Hant",
+    "ru",
+    "ko",
+    "ja",
+    "ar",
+    "bo"
+  ],
+  "tasks": [
+    {
+      "id": "ugc_moderation_decision",
+      "title": "单条 UGC 的合规处置",
+      "questions": {
+        "block_item": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "这条内容是否应当拦截？"
+            ],
+            "en": [
+              "Should this item be blocked?"
+            ],
+            "zh-Hant": [
+              "這條內容是否應當攔截？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "拦截",
+              "false": "不拦截"
+            },
+            "en": {
+              "true": "block",
+              "false": "do not block"
+            },
+            "zh-Hant": {
+              "true": "攔截",
+              "false": "不攔截"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "violation_type": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "命中了哪类违规？"
+            ],
+            "en": [
+              "Which violation class applies?"
+            ],
+            "zh-Hant": [
+              "命中了哪類違規？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "none": "未发现违规",
+              "spam": "重复导流广告",
+              "harassment": "针对个人的辱骂",
+              "adult": "露骨色情内容",
+              "violence": "血腥暴力画面",
+              "illegal_goods": "违禁品交易信息"
+            },
+            "en": {
+              "none": "no violation found",
+              "spam": "repetitive promotional spam",
+              "harassment": "targeted personal abuse",
+              "adult": "explicit adult content",
+              "violence": "graphic violence",
+              "illegal_goods": "listing for prohibited goods"
+            },
+            "zh-Hant": {
+              "none": "未發現違規",
+              "spam": "重複導流廣告",
+              "harassment": "針對個人的辱罵",
+              "adult": "露骨色情內容",
+              "violence": "血腥暴力畫面",
+              "illegal_goods": "違禁品交易資訊"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "enforcement": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "处置力度定在哪一档？"
+            ],
+            "en": [
+              "Which enforcement level applies?"
+            ],
+            "zh-Hant": [
+              "處置力度定在哪一檔？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "放行",
+              "降权",
+              "限流",
+              "拦截"
+            ],
+            "en": [
+              "allow",
+              "reduce reach",
+              "rate limit",
+              "block"
+            ],
+            "zh-Hant": [
+              "放行",
+              "降權",
+              "限流",
+              "攔截"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    },
+    {
+      "id": "comment_appeal_review",
+      "title": "创作者申诉复核",
+      "questions": {
+        "uphold_original": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "是否维持原判？"
+            ],
+            "en": [
+              "Should the original decision stand?"
+            ],
+            "zh-Hant": [
+              "是否維持原判？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "维持原判",
+              "false": "撤销原判"
+            },
+            "en": {
+              "true": "uphold",
+              "false": "overturn"
+            },
+            "zh-Hant": {
+              "true": "維持原判",
+              "false": "撤銷原判"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "appeal_ground": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "申诉的核心主张是什么？"
+            ],
+            "en": [
+              "What is the core ground of the appeal?"
+            ],
+            "zh-Hant": [
+              "申訴的核心主張是什麼？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "policy_misread": "规则理解有偏差",
+              "context_missing": "缺少上下文",
+              "sarcasm": "属于反讽表达",
+              "counter_evidence": "提交了反证材料",
+              "no_ground": "未提出实质理由"
+            },
+            "en": {
+              "policy_misread": "policy misread",
+              "context_missing": "missing context",
+              "sarcasm": "sarcastic framing",
+              "counter_evidence": "counter-evidence submitted",
+              "no_ground": "no substantive ground"
+            },
+            "zh-Hant": {
+              "policy_misread": "規則理解有偏差",
+              "context_missing": "缺少上下文",
+              "sarcasm": "屬於反諷表達",
+              "counter_evidence": "提交了反證材料",
+              "no_ground": "未提出實質理由"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "confidence": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "复核结论的把握有多大？"
+            ],
+            "en": [
+              "How confident is the review outcome?"
+            ],
+            "zh-Hant": [
+              "複核結論的把握有多大？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "很低",
+              "偏低",
+              "较高",
+              "很高"
+            ],
+            "en": [
+              "very low",
+              "low",
+              "fairly high",
+              "high"
+            ],
+            "zh-Hant": [
+              "很低",
+              "偏低",
+              "較高",
+              "很高"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    },
+    {
+      "id": "creator_risk_tier",
+      "title": "账号风险分级与限制",
+      "questions": {
+        "restrict_account": {
+          "type": "noul",
+          "instructions": {
+            "zh-Hans": [
+              "是否应当限制该账号？"
+            ],
+            "en": [
+              "Should this account be restricted?"
+            ],
+            "zh-Hant": [
+              "是否應當限制該帳號？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "true": "限制",
+              "false": "不限制"
+            },
+            "en": {
+              "true": "restrict",
+              "false": "do not restrict"
+            },
+            "zh-Hant": {
+              "true": "限制",
+              "false": "不限制"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "risk_signal": {
+          "type": "choice",
+          "instructions": {
+            "zh-Hans": [
+              "主导风险信号是什么？"
+            ],
+            "en": [
+              "What is the dominant risk signal?"
+            ],
+            "zh-Hant": [
+              "主導風險訊號是什麼？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": {
+              "none": "无异常信号",
+              "repeat_offense": "短期内重复违规",
+              "coordinated_inauthentic": "疑似协同刷量",
+              "monetization_abuse": "monetization 套利",
+              "minor_safety": "涉及未成年人安全"
+            },
+            "en": {
+              "none": "no anomaly",
+              "repeat_offense": "repeated violations in a short window",
+              "coordinated_inauthentic": "suspected coordinated inauthentic behaviour",
+              "monetization_abuse": "monetisation abuse",
+              "minor_safety": "minor-safety concern"
+            },
+            "zh-Hant": {
+              "none": "無異常訊號",
+              "repeat_offense": "短期內重複違規",
+              "coordinated_inauthentic": "疑似協同刷量",
+              "monetization_abuse": "變現套利",
+              "minor_safety": "涉及未成年人安全"
+            },
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        },
+        "risk_band": {
+          "type": "score",
+          "instructions": {
+            "zh-Hans": [
+              "风险档位定在哪一级？"
+            ],
+            "en": [
+              "Which risk tier applies?"
+            ],
+            "zh-Hant": [
+              "風險檔位定在哪一級？"
+            ],
+            "ru": [],
+            "ko": [],
+            "ja": [],
+            "ar": [],
+            "bo": []
+          },
+          "criteria": {
+            "zh-Hans": [
+              "低",
+              "中",
+              "偏高",
+              "高",
+              "极高"
+            ],
+            "en": [
+              "low",
+              "medium",
+              "elevated",
+              "high",
+              "critical"
+            ],
+            "zh-Hant": [
+              "低",
+              "中",
+              "偏高",
+              "高",
+              "極高"
+            ],
+            "ru": null,
+            "ko": null,
+            "ja": null,
+            "ar": null,
+            "bo": null
+          }
+        }
+      }
+    }
+  ],
+  "inject": {
+    "missing": 1
+  }
+}

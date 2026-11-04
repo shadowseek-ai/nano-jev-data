@@ -1,0 +1,67 @@
+{
+  "finance_insurance": [
+    "fin_insurance_claim_triage",
+    "fin_transaction_review",
+    "fin_credit_underwriting"
+  ],
+  "retail_ecommerce": [
+    "retail_order_exception",
+    "retail_content_moderation",
+    "retail_support_routing"
+  ],
+  "supply_chain_logistics": [
+    "supply_shipment_risk",
+    "supply_putaway_routing",
+    "supply_supplier_audit"
+  ],
+  "life_sciences_lab": [
+    "lab_assay_qc",
+    "lab_protocol_safety",
+    "lab_reagent_dispense"
+  ],
+  "healthcare_logistics": [
+    "med_bed_assignment",
+    "med_equipment_dispatch",
+    "med_supply_shortage"
+  ],
+  "manufacturing_quality": [
+    "mfg_defect_triage",
+    "mfg_maintenance_dispatch",
+    "mfg_work_order_routing"
+  ],
+  "energy_utilities": [
+    "energy_grid_alarm",
+    "energy_meter_anomaly",
+    "energy_load_scheduling"
+  ],
+  "telecom_network_ops": [
+    "tel_alarm_correlation",
+    "tel_ticket_dispatch",
+    "tel_capacity_planning"
+  ],
+  "public_sector_services": [
+    "gov_application_triage",
+    "gov_benefit_eligibility",
+    "gov_complaint_routing"
+  ],
+  "hr_recruiting": [
+    "hr_resume_screen",
+    "hr_interview_scheduling",
+    "hr_attrition_risk"
+  ],
+  "agent_tool_governance": [
+    "agent_tool_gate",
+    "data_change_approval",
+    "agent_task_route"
+  ],
+  "content_safety_ops": [
+    "ugc_moderation_decision",
+    "comment_appeal_review",
+    "creator_risk_tier"
+  ],
+  "embodied_game_ops": [
+    "npc_action_select",
+    "robot_task_route",
+    "game_event_escalation"
+  ]
+}
