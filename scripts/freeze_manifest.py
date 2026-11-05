@@ -116,7 +116,7 @@ def main() -> int:
         },
     }
     if not dry_run:
-        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
 
     # 打印核验摘要
     specs = load_specs()
