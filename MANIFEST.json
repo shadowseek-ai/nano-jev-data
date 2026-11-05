@@ -1,651 +1,27 @@
 {
   "schema_version": 1,
-  "dataset_version": "2026.11.04.3",
+  "dataset_version": "2026.11.05.1",
   "generator": "nano-jev-synth/1",
   "seed": null,
-  "frozen_at": "2026-11-04T10:46:20+00:00",
-  "note": "三语对齐数据集：每垂类每语言 train>=2000 / test>=500题 / post>=200题，已去重；MIT 许可",
+  "frozen_at": "2026-11-05T04:28:31+00:00",
+  "note": "三语对齐数据集：简体中文为源语言，每垂类每语言 train>=3000 条 / test>=500 题 / post>=200 题，已去重；MIT 许可",
   "license": "MIT",
   "root": "data",
   "splits": {
     "train": {
-      "records": 103584,
-      "questions": 310752
-    },
-    "dev": {
-      "records": 700,
-      "questions": 2100
+      "records": 103641,
+      "questions": 310923
     },
     "test": {
       "records": 9905,
       "questions": 29715
+    },
+    "dev": {
+      "records": 700,
+      "questions": 2100
     }
   },
   "files": {
-    "dev/00-llm.agent_tool_governance.en.jsonl": {
-      "sha256": "1a104a4c38336ffb86934f18cde543c67fde5db0f161733fc17ec2e60a96daf9",
-      "bytes": 27493,
-      "records": 17,
-      "questions": 51,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.agent_tool_governance.zh-Hans.jsonl": {
-      "sha256": "f1c4a271cfd069e9c883e1d74cb2fbe17a1a5eaad54caed65850a1f68daadbc9",
-      "bytes": 23199,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.agent_tool_governance.zh-Hant.jsonl": {
-      "sha256": "4fc9a3cd04e3e0ccdec20d35b0f8350ef4a5ba6a925f2ca1d54c9391d5141b84",
-      "bytes": 43620,
-      "records": 31,
-      "questions": 93,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.content_safety_ops.en.jsonl": {
-      "sha256": "a46ad080566eef95e1b1f15facfea64aa5976152e193dff5c2d58eee6f46c514",
-      "bytes": 31722,
-      "records": 20,
-      "questions": 60,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.content_safety_ops.zh-Hans.jsonl": {
-      "sha256": "cd6231a623fc370590218e45ec5176c3181ac2814f2032aaf26be55241228566",
-      "bytes": 22825,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.content_safety_ops.zh-Hant.jsonl": {
-      "sha256": "e1d8bdbac2dbde8dc0ee762e62c0c0b3924852b3c3e913179db5f138da78442a",
-      "bytes": 26692,
-      "records": 20,
-      "questions": 60,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.embodied_game_ops.en.jsonl": {
-      "sha256": "ae68d8d024e8fff67a290ef23742e518c56b12360353f890486ce8c5d5c1d0ab",
-      "bytes": 23255,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.embodied_game_ops.zh-Hans.jsonl": {
-      "sha256": "0da1bebba524c38aaff9679089a45d9489618c06738fad667c49a183c55c609b",
-      "bytes": 27661,
-      "records": 20,
-      "questions": 60,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.embodied_game_ops.zh-Hant.jsonl": {
-      "sha256": "5102e29a8bf3b854fece7f5aca3104a67ea0941d143058a4be3306e8ded22f09",
-      "bytes": 29606,
-      "records": 21,
-      "questions": 63,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.energy_utilities.en.jsonl": {
-      "sha256": "20711eb716834bd78980336fba04c13b33e5af2cac2e0a68ad770abfad5f6796",
-      "bytes": 20315,
-      "records": 12,
-      "questions": 36,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.energy_utilities.zh-Hans.jsonl": {
-      "sha256": "a62e8876b70b65c471cfc6cb7129921cf4fc5da6127fa7188d330a1f2e284df6",
-      "bytes": 31413,
-      "records": 22,
-      "questions": 66,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.energy_utilities.zh-Hant.jsonl": {
-      "sha256": "199bd4fe4ec89076e760860e84c8189232b36ef70113aae3bb15a6214feb02fa",
-      "bytes": 23754,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.finance_insurance.en.jsonl": {
-      "sha256": "01de16d4d490e802eb30f4d2ed2bf5fa31dc9bbc9476c88377f92a5b5c44afee",
-      "bytes": 26239,
-      "records": 15,
-      "questions": 45,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.finance_insurance.zh-Hans.jsonl": {
-      "sha256": "6ee5393336fb3e0f6cbb33582fb225cb3b44e6565cc0a2a2cf573e7ac038165c",
-      "bytes": 35550,
-      "records": 24,
-      "questions": 72,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.finance_insurance.zh-Hant.jsonl": {
-      "sha256": "b57e0e88acb7059004a979951cc2303a1f9c00557a98e66bde91d311ccacbd36",
-      "bytes": 35164,
-      "records": 24,
-      "questions": 72,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.healthcare_logistics.en.jsonl": {
-      "sha256": "020018482bf8fda56b0c3611a7a540d36c29272e970e13695838bb686936a2ad",
-      "bytes": 29863,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.healthcare_logistics.zh-Hans.jsonl": {
-      "sha256": "c4edb93f581832a102f1482a95c229a43f69961579e335dc5ed45dbf217db688",
-      "bytes": 23671,
-      "records": 15,
-      "questions": 45,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.healthcare_logistics.zh-Hant.jsonl": {
-      "sha256": "3e45ed441ce4ad518ae0c7ace96ddb5d33be2013a76f9ba7bd259382ea1c74cc",
-      "bytes": 28580,
-      "records": 18,
-      "questions": 54,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.hr_recruiting.en.jsonl": {
-      "sha256": "6af675ebb04ff3b3e0c0898c4218e2b9abaed7dfb5b8af172287a3aa8c3fcdab",
-      "bytes": 35158,
-      "records": 20,
-      "questions": 60,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.hr_recruiting.zh-Hans.jsonl": {
-      "sha256": "7e44f2c67ce1c48eeeec268f926854dc6997deb74ea274f7c843e7455f9a0684",
-      "bytes": 18517,
-      "records": 13,
-      "questions": 39,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.hr_recruiting.zh-Hant.jsonl": {
-      "sha256": "470fc51b6aa5a876e27635c6a17918cd6c616168e23a9c59e4e7f4f2ca3f1d25",
-      "bytes": 24612,
-      "records": 17,
-      "questions": 51,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.life_sciences_lab.en.jsonl": {
-      "sha256": "a2383368931cfe0ae826c25133ae4356f70760111c7530f401dfd1dcbc687e8f",
-      "bytes": 20050,
-      "records": 12,
-      "questions": 36,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.life_sciences_lab.zh-Hans.jsonl": {
-      "sha256": "321a0af97521216831c78b3621e4250be5bd5e08723618e425f24ba930f46f45",
-      "bytes": 18807,
-      "records": 13,
-      "questions": 39,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.life_sciences_lab.zh-Hant.jsonl": {
-      "sha256": "9dbc2a51a973589d8186c3f51ef36d372da4eaba18363985e6d39325a32741b6",
-      "bytes": 24178,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.manufacturing_quality.en.jsonl": {
-      "sha256": "1de340959ac53d488ed3c7526f2ab39faf5e8df397e1ff241d2ede4d90906042",
-      "bytes": 49479,
-      "records": 30,
-      "questions": 90,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.manufacturing_quality.zh-Hans.jsonl": {
-      "sha256": "dd536e7bf78bc46132a38759691c13db50a0eacc6f413028d93e7c3c46c6c732",
-      "bytes": 15483,
-      "records": 11,
-      "questions": 33,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.manufacturing_quality.zh-Hant.jsonl": {
-      "sha256": "2ed176d6fd20d3378cac6f018f0c72dc81da904989c01cca5487dca8e50f4c04",
-      "bytes": 31842,
-      "records": 23,
-      "questions": 69,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.public_sector_services.en.jsonl": {
-      "sha256": "c69e51e8c1a27973059187a544ad14ae5602d0e324476987e1d6120b8e4e696d",
-      "bytes": 28241,
-      "records": 14,
-      "questions": 42,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.public_sector_services.zh-Hans.jsonl": {
-      "sha256": "ba74a436dfa4cf43f2d80166f0a5c958d8221ef4c01ee88dfd20b9cd26a09c63",
-      "bytes": 32568,
-      "records": 21,
-      "questions": 63,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.public_sector_services.zh-Hant.jsonl": {
-      "sha256": "375943edaee8b94cb69db54cdfca7e4cbbf3d29c1ae76e1f1479686d0108499a",
-      "bytes": 35278,
-      "records": 23,
-      "questions": 69,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.retail_ecommerce.en.jsonl": {
-      "sha256": "7486bbf0941ce2d158116d34776c894b4c940f663ff88a248f875b659e8a4544",
-      "bytes": 28043,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.retail_ecommerce.zh-Hans.jsonl": {
-      "sha256": "c3efbca6ce6da82f5d5b64c175672ddb9b87fe148333849117eb475508a69e17",
-      "bytes": 32035,
-      "records": 22,
-      "questions": 66,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.retail_ecommerce.zh-Hant.jsonl": {
-      "sha256": "a24f3b036e298f560e1a8994b30c5c8760e34a562622ca6d12ae9b5d4b6f57e6",
-      "bytes": 36038,
-      "records": 26,
-      "questions": 78,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.supply_chain_logistics.en.jsonl": {
-      "sha256": "587aba65df32b4ee5014f291e3c065933d9673df3a6ad97417ecd2ad90156fd3",
-      "bytes": 22269,
-      "records": 14,
-      "questions": 42,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.supply_chain_logistics.zh-Hans.jsonl": {
-      "sha256": "765ec1e37b451b3a0dff73bbcd30c936a3cae3affbc6cae25e022b38e61d1f8e",
-      "bytes": 11301,
-      "records": 8,
-      "questions": 24,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.supply_chain_logistics.zh-Hant.jsonl": {
-      "sha256": "7d2761dcc3ccbda4b7e178296e8a7165fd73940052f261ecfbc488dd9bc34f97",
-      "bytes": 27596,
-      "records": 19,
-      "questions": 57,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.telecom_network_ops.en.jsonl": {
-      "sha256": "785a9ae4064585a6c4924ae916ade0cdc5c9e3be6da40a888f8c836f49e3e5ac",
-      "bytes": 25942,
-      "records": 15,
-      "questions": 45,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.telecom_network_ops.zh-Hans.jsonl": {
-      "sha256": "4b7b0996158fc2fef3b52265bb2f4bd8f65ed5822361ca402875df8d007a98a1",
-      "bytes": 17207,
-      "records": 12,
-      "questions": 36,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "dev/00-llm.telecom_network_ops.zh-Hant.jsonl": {
-      "sha256": "5f5f15b48649d1ffa2d585611780122b315fae7671fa50801c6781e458edcbcc",
-      "bytes": 24555,
-      "records": 16,
-      "questions": 48,
-      "split": "dev",
-      "origin": "custom"
-    },
-    "test/00-llm.agent_tool_governance.en.jsonl": {
-      "sha256": "47d667eb9ed2c5d726e338ffc0798e5f6d3916e3a47e5b3b96e12c7af751458e",
-      "bytes": 307318,
-      "records": 198,
-      "questions": 594,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.agent_tool_governance.zh-Hans.jsonl": {
-      "sha256": "f6a31b563cbe2ddda5d8fe2781231e93742afad34f420f183f9a83be02d14074",
-      "bytes": 406205,
-      "records": 295,
-      "questions": 885,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.agent_tool_governance.zh-Hant.jsonl": {
-      "sha256": "2ba7c20abd78bef6fec4f73fa7ff4e69304e694785c424904ba21beb193b712d",
-      "bytes": 570724,
-      "records": 415,
-      "questions": 1245,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.content_safety_ops.en.jsonl": {
-      "sha256": "572234dbc5cda2398b15c9121e9109fd6aa7f2a191a4d5d09c482c38dbe9730d",
-      "bytes": 420950,
-      "records": 253,
-      "questions": 759,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.content_safety_ops.zh-Hans.jsonl": {
-      "sha256": "f81e00435100f09c78ed4e272eceaaf94320a7283784efa674c945dbdd6191b9",
-      "bytes": 322964,
-      "records": 227,
-      "questions": 681,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.content_safety_ops.zh-Hant.jsonl": {
-      "sha256": "b0d628d962d0334ea7979c8e174eb63f95729fb3c043810b5ff18eb0cff253c9",
-      "bytes": 362635,
-      "records": 258,
-      "questions": 774,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.embodied_game_ops.en.jsonl": {
-      "sha256": "afcf67043f8ff077d06cea7f7c6e88f9cec5f17be13f7b958a28d0da3a50f3c2",
-      "bytes": 327682,
-      "records": 212,
-      "questions": 636,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.embodied_game_ops.zh-Hans.jsonl": {
-      "sha256": "1936fb8fab2927b804f753ce08617434bc5be31f71791fedcca3a6a2869f1b22",
-      "bytes": 303877,
-      "records": 230,
-      "questions": 690,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.embodied_game_ops.zh-Hant.jsonl": {
-      "sha256": "22d9d8df9a302551ca515f80385fe87f8a1493a66be812d63f29ffc199038bd3",
-      "bytes": 328394,
-      "records": 246,
-      "questions": 738,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.energy_utilities.en.jsonl": {
-      "sha256": "d91d03c017ce76d83db15f407eac00c18ccc71787216b64c657c2d5faa0e4872",
-      "bytes": 392625,
-      "records": 221,
-      "questions": 663,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.energy_utilities.zh-Hans.jsonl": {
-      "sha256": "dd23700038e4103e57f32c87ab8e5889bf4677c12a3c67c8c2e1295eaef8accc",
-      "bytes": 338283,
-      "records": 232,
-      "questions": 696,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.energy_utilities.zh-Hant.jsonl": {
-      "sha256": "79f321654f894d0f800f1e54ad6c13e9e0582bfec9032ddf9203120ac9e0532d",
-      "bytes": 305550,
-      "records": 209,
-      "questions": 627,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.finance_insurance.en.jsonl": {
-      "sha256": "8eb67b923b27b23dbed974e571cd6b31ba2d406d725d21454088c2a3c768ad0a",
-      "bytes": 401378,
-      "records": 234,
-      "questions": 702,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.finance_insurance.zh-Hans.jsonl": {
-      "sha256": "94a7123d7666d96d3d2b128ac927ab420406f858f4a7a1f9aa39fa68749032ec",
-      "bytes": 368004,
-      "records": 246,
-      "questions": 738,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.finance_insurance.zh-Hant.jsonl": {
-      "sha256": "476c6a1a5c72e62051b9532ab88c8b683de5bf7e0b64e2dcfba863a97111c6c6",
-      "bytes": 430441,
-      "records": 290,
-      "questions": 870,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.healthcare_logistics.en.jsonl": {
-      "sha256": "d00d8d57f64c6d6dfcb4ca23c271a011a8419b2f0ba399d490adaaeeb391a10a",
-      "bytes": 409365,
-      "records": 213,
-      "questions": 639,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.healthcare_logistics.zh-Hans.jsonl": {
-      "sha256": "442719039bed8b32c2b5751a1c6d790d71cf3136e0ae4196c0dad93d93b0581b",
-      "bytes": 374244,
-      "records": 231,
-      "questions": 693,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.healthcare_logistics.zh-Hant.jsonl": {
-      "sha256": "5242b9888ccc53386ae8a82042b2063843951ca096002a3f4d9ebc4b28ed6f5f",
-      "bytes": 432465,
-      "records": 266,
-      "questions": 798,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.hr_recruiting.en.jsonl": {
-      "sha256": "2b01cf7907d60efd4a6bd7d0a765c93d2cad54aae98dfe0ff9d25b1ebdd0c7cf",
-      "bytes": 355209,
-      "records": 203,
-      "questions": 609,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.hr_recruiting.zh-Hans.jsonl": {
-      "sha256": "b062aff62089fd04ab9b03294a7f3874424e310a525975363d91bf87302aa398",
-      "bytes": 385045,
-      "records": 262,
-      "questions": 786,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.hr_recruiting.zh-Hant.jsonl": {
-      "sha256": "55ac2c409b6fd0328db2381fe74a135a81733f42606a44d62d18a146ac5bad79",
-      "bytes": 298896,
-      "records": 203,
-      "questions": 609,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.life_sciences_lab.en.jsonl": {
-      "sha256": "698962f526c0587dd063b4ff882bdbb30d8e4f8ede85333dd73339ea52170ed5",
-      "bytes": 395606,
-      "records": 234,
-      "questions": 702,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.life_sciences_lab.zh-Hans.jsonl": {
-      "sha256": "0f89be064f6be35cc9596e67530d6c05bf480b5761c79c76642ec373273c2af6",
-      "bytes": 323157,
-      "records": 225,
-      "questions": 675,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.life_sciences_lab.zh-Hant.jsonl": {
-      "sha256": "0bdc207dfd46697904fc013390085ce9a558d9d5efaae544054ec9f602a21a49",
-      "bytes": 363837,
-      "records": 248,
-      "questions": 744,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.manufacturing_quality.en.jsonl": {
-      "sha256": "fcb374fc4b09df57e47e87c15fb9e0bce30f3e79bb4e7d6ef4151a0dcf6e4683",
-      "bytes": 541427,
-      "records": 325,
-      "questions": 975,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.manufacturing_quality.zh-Hans.jsonl": {
-      "sha256": "7a86fce754dc516de0c5c1deed4b9f1faabcb1aa5c5f827ccfaffc797a00ee0f",
-      "bytes": 342286,
-      "records": 247,
-      "questions": 741,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.manufacturing_quality.zh-Hant.jsonl": {
-      "sha256": "2a0d710f1db090aca8bf5028c5e864a1907c713c82bd724ca9b686440d33599d",
-      "bytes": 426935,
-      "records": 308,
-      "questions": 924,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.public_sector_services.en.jsonl": {
-      "sha256": "b9b97a3a4e1b9d967ed3cea26bcbe9e0f974869a78958678ab9df08e4822c330",
-      "bytes": 453406,
-      "records": 241,
-      "questions": 723,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.public_sector_services.zh-Hans.jsonl": {
-      "sha256": "e65bbd24be186904d6460ae2096a2bff169796f18faab99ce5a273a255fbe5a5",
-      "bytes": 349254,
-      "records": 223,
-      "questions": 669,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.public_sector_services.zh-Hant.jsonl": {
-      "sha256": "bcbb1896076796e6ae54cd35ae8d97664d3b5bb976aeba5c3c959910e5a662d8",
-      "bytes": 432776,
-      "records": 277,
-      "questions": 831,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.retail_ecommerce.en.jsonl": {
-      "sha256": "339106ae79009a6b5b471b38484640ee27f77bae0e1d860bed7c9556ae9d4b3f",
-      "bytes": 527945,
-      "records": 313,
-      "questions": 939,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.retail_ecommerce.zh-Hans.jsonl": {
-      "sha256": "330cb907ddb89eccf6154f6a27e859ee23168dd8cb5026e214a7ed7aa4f8949e",
-      "bytes": 341824,
-      "records": 241,
-      "questions": 723,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.retail_ecommerce.zh-Hant.jsonl": {
-      "sha256": "fda2ba52f6f663036f44d404277c89cc1de338f713b54725bd9fc1870c5fa8e9",
-      "bytes": 466387,
-      "records": 328,
-      "questions": 984,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.supply_chain_logistics.en.jsonl": {
-      "sha256": "b0954a4f31a5523bcad27297a3729b23248079cd15201482b612afa64b9b250a",
-      "bytes": 358062,
-      "records": 216,
-      "questions": 648,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.supply_chain_logistics.zh-Hans.jsonl": {
-      "sha256": "c046d1e0250888697dcad4c6d91e2771e9227a0f39be2dd151c10d78414d3660",
-      "bytes": 342567,
-      "records": 242,
-      "questions": 726,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.supply_chain_logistics.zh-Hant.jsonl": {
-      "sha256": "28cb31a6c366e074d878eb2395e27ae894f5c44311520fdfd22950f23c23db66",
-      "bytes": 357177,
-      "records": 250,
-      "questions": 750,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.telecom_network_ops.en.jsonl": {
-      "sha256": "f84b8aaf226630b0cac2f76b25a7b44ea124d7493a51b2848b1560e73b1880c2",
-      "bytes": 430933,
-      "records": 251,
-      "questions": 753,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.telecom_network_ops.zh-Hans.jsonl": {
-      "sha256": "ea5f1399790059671d5ae9d71d837387761511231721f2f7d5eb71934d678fd5",
-      "bytes": 353886,
-      "records": 238,
-      "questions": 714,
-      "split": "test",
-      "origin": "custom"
-    },
-    "test/00-llm.telecom_network_ops.zh-Hant.jsonl": {
-      "sha256": "ea8a03a9eea129e8b3b156e5fc804ea0e1f3e26a7f6c1a3fdf5811aa4e3063ae",
-      "bytes": 526019,
-      "records": 354,
-      "questions": 1062,
-      "split": "test",
-      "origin": "custom"
-    },
     "train/00-llm.agent_tool_governance.en.jsonl": {
       "sha256": "2f6a6345707d9beaec4ac7cdd565c3bc0b939bd438e4430a02b6d1b80a5ab59d",
       "bytes": 3325375,
@@ -1007,50 +383,50 @@
       "origin": "custom"
     },
     "train/posttrain/00-llm.embodied_game_ops.en.jsonl": {
-      "sha256": "1794d30f376c58b3846e02af49a2799a32c27ebe92cac554ce6b6c7d35d6a02a",
-      "bytes": 152553,
-      "records": 98,
-      "questions": 294,
+      "sha256": "4dd23a55451e6db45dc99fa678774b6095f34aea735851208e7cf56cb754286a",
+      "bytes": 158686,
+      "records": 101,
+      "questions": 303,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.embodied_game_ops.zh-Hans.jsonl": {
-      "sha256": "f655b16fa934acb5059a30bdc31128824cc8b647d29758a676dd6d40f507b643",
-      "bytes": 146574,
-      "records": 110,
-      "questions": 330,
+      "sha256": "12b3946b2feff330531c831a0c12d295461a02b1e668f734073b17ded1024563",
+      "bytes": 151718,
+      "records": 113,
+      "questions": 339,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.embodied_game_ops.zh-Hant.jsonl": {
-      "sha256": "2371035fa0fe0cc9da988403bc87421fa2d30b3ba146c98d2fa955361c897baa",
-      "bytes": 153258,
-      "records": 114,
-      "questions": 342,
+      "sha256": "ede341e83f84bc4faeba1166b5a937fd9119af408cfd54a694b58bfe5495f8f3",
+      "bytes": 158405,
+      "records": 117,
+      "questions": 351,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.energy_utilities.en.jsonl": {
-      "sha256": "f728feb34c147b5ebca86e06f8699d9a0406bac13f55e6f57079ab1072c815e6",
-      "bytes": 194533,
-      "records": 111,
-      "questions": 333,
+      "sha256": "759cdddc709584dcee840f559498ad5edb0f894f690de7426f21610abd559901",
+      "bytes": 203226,
+      "records": 115,
+      "questions": 345,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.energy_utilities.zh-Hans.jsonl": {
-      "sha256": "d225fca9270e7c38092ee4c8de823e06c046ba4f6d45a9048ccd36860705a5af",
-      "bytes": 146989,
-      "records": 99,
-      "questions": 297,
+      "sha256": "9a4b0cf3758522a75a6e1d712d14b6bb363e5f5be332f304ae6851b34fdb86e0",
+      "bytes": 154056,
+      "records": 103,
+      "questions": 309,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.energy_utilities.zh-Hant.jsonl": {
-      "sha256": "f53894abd9ba972faa4a7089e34cfd71426cbbeb3dd073a2fb0807faf67c72e4",
-      "bytes": 173960,
-      "records": 120,
-      "questions": 360,
+      "sha256": "2b149a0f4a1d7f3b82a14b0cd038d64ff259852b258b231c52dbe6539d71b4aa",
+      "bytes": 181048,
+      "records": 124,
+      "questions": 372,
       "split": "train",
       "origin": "custom"
     },
@@ -1079,26 +455,26 @@
       "origin": "custom"
     },
     "train/posttrain/00-llm.healthcare_logistics.en.jsonl": {
-      "sha256": "f9a786f09569c7f5479951871035036dd4bbe06b7ceb2b5b4492ad8cf7823ab7",
-      "bytes": 224719,
-      "records": 115,
-      "questions": 345,
+      "sha256": "0dbae86d8622ce28ff82ea368b3d5c629945307bc116dbc1b9546c7f9ec3a122",
+      "bytes": 235182,
+      "records": 119,
+      "questions": 357,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.healthcare_logistics.zh-Hans.jsonl": {
-      "sha256": "0cc368b1cb60764fdd227d7fa6feff07a78884221d1fb0220c59eac30228e125",
-      "bytes": 194528,
-      "records": 117,
-      "questions": 351,
+      "sha256": "2d557db53427abe2ea95354cc6d513e6518cacc05ecc091dd856127a110547ed",
+      "bytes": 202828,
+      "records": 121,
+      "questions": 363,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.healthcare_logistics.zh-Hant.jsonl": {
-      "sha256": "3a254f21280bef1b4c0c6b7fdfd956b1b1719389c8959b3f6e0b006e69580f43",
-      "bytes": 156883,
-      "records": 98,
-      "questions": 294,
+      "sha256": "8de2590d4085094f6d8d531e6b346be368a777077f62ae33569fc1be903b68fb",
+      "bytes": 165168,
+      "records": 102,
+      "questions": 306,
       "split": "train",
       "origin": "custom"
     },
@@ -1127,26 +503,26 @@
       "origin": "custom"
     },
     "train/posttrain/00-llm.life_sciences_lab.en.jsonl": {
-      "sha256": "c7893db7846d6a989272484d207609689c47c989218f534ff38b7e9888d4590c",
-      "bytes": 194263,
-      "records": 114,
-      "questions": 342,
+      "sha256": "6b1745c5387c3a6f33a9da03aac2105ab9ee81fe5f1d7308cdfe02df4ad71e6f",
+      "bytes": 203164,
+      "records": 118,
+      "questions": 354,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.life_sciences_lab.zh-Hans.jsonl": {
-      "sha256": "cc58c3d7f99ffa0e4fe68f574cd3324b3fd50604bf825d3092ad84cf349989fe",
-      "bytes": 145787,
-      "records": 99,
-      "questions": 297,
+      "sha256": "77a8799cabb9d4cb4c1bf93ced961df1265549db40f6228773ca7d29ca9dcf52",
+      "bytes": 153006,
+      "records": 103,
+      "questions": 309,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.life_sciences_lab.zh-Hant.jsonl": {
-      "sha256": "626a2f54dc5ad1bcba1d5ae567a9fe3a121b0b32958830f0842de5829c3a7674",
-      "bytes": 167638,
-      "records": 114,
-      "questions": 342,
+      "sha256": "d8e277668adbd6584ac96576543042063422b7079ba2faecd6ffdc9e75a197a4",
+      "bytes": 174863,
+      "records": 118,
+      "questions": 354,
       "split": "train",
       "origin": "custom"
     },
@@ -1175,26 +551,26 @@
       "origin": "custom"
     },
     "train/posttrain/00-llm.public_sector_services.en.jsonl": {
-      "sha256": "7105163fabf7149c4de8aa17e10c7e49545cacca769da9938bc2fbb354325af8",
-      "bytes": 186324,
-      "records": 98,
-      "questions": 294,
+      "sha256": "636dccfbf5c70427b39c3b30b1c293d1735d96729177057f4f514da1e2b88080",
+      "bytes": 196542,
+      "records": 102,
+      "questions": 306,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.public_sector_services.zh-Hans.jsonl": {
-      "sha256": "9ede2022783444d9b3a43bf80197af06fde0b3186a1d0a6545724359b202ef0f",
-      "bytes": 218866,
-      "records": 139,
-      "questions": 417,
+      "sha256": "4baa74de4157127f4d2c3b30155ba11a3f364e86ce7bef2335b3126037c245bd",
+      "bytes": 227017,
+      "records": 143,
+      "questions": 429,
       "split": "train",
       "origin": "custom"
     },
     "train/posttrain/00-llm.public_sector_services.zh-Hant.jsonl": {
-      "sha256": "98a4572f7e50008ab43b6397799f81f20af3a3d9b7ede1192a72e2480a1ad26e",
-      "bytes": 174903,
-      "records": 112,
-      "questions": 336,
+      "sha256": "fa1c29dd3a4238fd9d5adec9b80548910c9cb2d497ae67e26c7e28250034b563",
+      "bytes": 183078,
+      "records": 116,
+      "questions": 348,
       "split": "train",
       "origin": "custom"
     },
@@ -1269,6 +645,630 @@
       "questions": 483,
       "split": "train",
       "origin": "custom"
+    },
+    "test/00-llm.agent_tool_governance.en.jsonl": {
+      "sha256": "47d667eb9ed2c5d726e338ffc0798e5f6d3916e3a47e5b3b96e12c7af751458e",
+      "bytes": 307318,
+      "records": 198,
+      "questions": 594,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.agent_tool_governance.zh-Hans.jsonl": {
+      "sha256": "f6a31b563cbe2ddda5d8fe2781231e93742afad34f420f183f9a83be02d14074",
+      "bytes": 406205,
+      "records": 295,
+      "questions": 885,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.agent_tool_governance.zh-Hant.jsonl": {
+      "sha256": "2ba7c20abd78bef6fec4f73fa7ff4e69304e694785c424904ba21beb193b712d",
+      "bytes": 570724,
+      "records": 415,
+      "questions": 1245,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.content_safety_ops.en.jsonl": {
+      "sha256": "572234dbc5cda2398b15c9121e9109fd6aa7f2a191a4d5d09c482c38dbe9730d",
+      "bytes": 420950,
+      "records": 253,
+      "questions": 759,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.content_safety_ops.zh-Hans.jsonl": {
+      "sha256": "f81e00435100f09c78ed4e272eceaaf94320a7283784efa674c945dbdd6191b9",
+      "bytes": 322964,
+      "records": 227,
+      "questions": 681,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.content_safety_ops.zh-Hant.jsonl": {
+      "sha256": "b0d628d962d0334ea7979c8e174eb63f95729fb3c043810b5ff18eb0cff253c9",
+      "bytes": 362635,
+      "records": 258,
+      "questions": 774,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.embodied_game_ops.en.jsonl": {
+      "sha256": "afcf67043f8ff077d06cea7f7c6e88f9cec5f17be13f7b958a28d0da3a50f3c2",
+      "bytes": 327682,
+      "records": 212,
+      "questions": 636,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.embodied_game_ops.zh-Hans.jsonl": {
+      "sha256": "1936fb8fab2927b804f753ce08617434bc5be31f71791fedcca3a6a2869f1b22",
+      "bytes": 303877,
+      "records": 230,
+      "questions": 690,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.embodied_game_ops.zh-Hant.jsonl": {
+      "sha256": "22d9d8df9a302551ca515f80385fe87f8a1493a66be812d63f29ffc199038bd3",
+      "bytes": 328394,
+      "records": 246,
+      "questions": 738,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.energy_utilities.en.jsonl": {
+      "sha256": "d91d03c017ce76d83db15f407eac00c18ccc71787216b64c657c2d5faa0e4872",
+      "bytes": 392625,
+      "records": 221,
+      "questions": 663,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.energy_utilities.zh-Hans.jsonl": {
+      "sha256": "dd23700038e4103e57f32c87ab8e5889bf4677c12a3c67c8c2e1295eaef8accc",
+      "bytes": 338283,
+      "records": 232,
+      "questions": 696,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.energy_utilities.zh-Hant.jsonl": {
+      "sha256": "79f321654f894d0f800f1e54ad6c13e9e0582bfec9032ddf9203120ac9e0532d",
+      "bytes": 305550,
+      "records": 209,
+      "questions": 627,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.finance_insurance.en.jsonl": {
+      "sha256": "8eb67b923b27b23dbed974e571cd6b31ba2d406d725d21454088c2a3c768ad0a",
+      "bytes": 401378,
+      "records": 234,
+      "questions": 702,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.finance_insurance.zh-Hans.jsonl": {
+      "sha256": "94a7123d7666d96d3d2b128ac927ab420406f858f4a7a1f9aa39fa68749032ec",
+      "bytes": 368004,
+      "records": 246,
+      "questions": 738,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.finance_insurance.zh-Hant.jsonl": {
+      "sha256": "476c6a1a5c72e62051b9532ab88c8b683de5bf7e0b64e2dcfba863a97111c6c6",
+      "bytes": 430441,
+      "records": 290,
+      "questions": 870,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.healthcare_logistics.en.jsonl": {
+      "sha256": "d00d8d57f64c6d6dfcb4ca23c271a011a8419b2f0ba399d490adaaeeb391a10a",
+      "bytes": 409365,
+      "records": 213,
+      "questions": 639,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.healthcare_logistics.zh-Hans.jsonl": {
+      "sha256": "442719039bed8b32c2b5751a1c6d790d71cf3136e0ae4196c0dad93d93b0581b",
+      "bytes": 374244,
+      "records": 231,
+      "questions": 693,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.healthcare_logistics.zh-Hant.jsonl": {
+      "sha256": "5242b9888ccc53386ae8a82042b2063843951ca096002a3f4d9ebc4b28ed6f5f",
+      "bytes": 432465,
+      "records": 266,
+      "questions": 798,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.hr_recruiting.en.jsonl": {
+      "sha256": "2b01cf7907d60efd4a6bd7d0a765c93d2cad54aae98dfe0ff9d25b1ebdd0c7cf",
+      "bytes": 355209,
+      "records": 203,
+      "questions": 609,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.hr_recruiting.zh-Hans.jsonl": {
+      "sha256": "b062aff62089fd04ab9b03294a7f3874424e310a525975363d91bf87302aa398",
+      "bytes": 385045,
+      "records": 262,
+      "questions": 786,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.hr_recruiting.zh-Hant.jsonl": {
+      "sha256": "55ac2c409b6fd0328db2381fe74a135a81733f42606a44d62d18a146ac5bad79",
+      "bytes": 298896,
+      "records": 203,
+      "questions": 609,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.life_sciences_lab.en.jsonl": {
+      "sha256": "698962f526c0587dd063b4ff882bdbb30d8e4f8ede85333dd73339ea52170ed5",
+      "bytes": 395606,
+      "records": 234,
+      "questions": 702,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.life_sciences_lab.zh-Hans.jsonl": {
+      "sha256": "0f89be064f6be35cc9596e67530d6c05bf480b5761c79c76642ec373273c2af6",
+      "bytes": 323157,
+      "records": 225,
+      "questions": 675,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.life_sciences_lab.zh-Hant.jsonl": {
+      "sha256": "0bdc207dfd46697904fc013390085ce9a558d9d5efaae544054ec9f602a21a49",
+      "bytes": 363837,
+      "records": 248,
+      "questions": 744,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.manufacturing_quality.en.jsonl": {
+      "sha256": "fcb374fc4b09df57e47e87c15fb9e0bce30f3e79bb4e7d6ef4151a0dcf6e4683",
+      "bytes": 541427,
+      "records": 325,
+      "questions": 975,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.manufacturing_quality.zh-Hans.jsonl": {
+      "sha256": "7a86fce754dc516de0c5c1deed4b9f1faabcb1aa5c5f827ccfaffc797a00ee0f",
+      "bytes": 342286,
+      "records": 247,
+      "questions": 741,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.manufacturing_quality.zh-Hant.jsonl": {
+      "sha256": "2a0d710f1db090aca8bf5028c5e864a1907c713c82bd724ca9b686440d33599d",
+      "bytes": 426935,
+      "records": 308,
+      "questions": 924,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.public_sector_services.en.jsonl": {
+      "sha256": "b9b97a3a4e1b9d967ed3cea26bcbe9e0f974869a78958678ab9df08e4822c330",
+      "bytes": 453406,
+      "records": 241,
+      "questions": 723,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.public_sector_services.zh-Hans.jsonl": {
+      "sha256": "e65bbd24be186904d6460ae2096a2bff169796f18faab99ce5a273a255fbe5a5",
+      "bytes": 349254,
+      "records": 223,
+      "questions": 669,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.public_sector_services.zh-Hant.jsonl": {
+      "sha256": "bcbb1896076796e6ae54cd35ae8d97664d3b5bb976aeba5c3c959910e5a662d8",
+      "bytes": 432776,
+      "records": 277,
+      "questions": 831,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.retail_ecommerce.en.jsonl": {
+      "sha256": "339106ae79009a6b5b471b38484640ee27f77bae0e1d860bed7c9556ae9d4b3f",
+      "bytes": 527945,
+      "records": 313,
+      "questions": 939,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.retail_ecommerce.zh-Hans.jsonl": {
+      "sha256": "330cb907ddb89eccf6154f6a27e859ee23168dd8cb5026e214a7ed7aa4f8949e",
+      "bytes": 341824,
+      "records": 241,
+      "questions": 723,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.retail_ecommerce.zh-Hant.jsonl": {
+      "sha256": "fda2ba52f6f663036f44d404277c89cc1de338f713b54725bd9fc1870c5fa8e9",
+      "bytes": 466387,
+      "records": 328,
+      "questions": 984,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.supply_chain_logistics.en.jsonl": {
+      "sha256": "b0954a4f31a5523bcad27297a3729b23248079cd15201482b612afa64b9b250a",
+      "bytes": 358062,
+      "records": 216,
+      "questions": 648,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.supply_chain_logistics.zh-Hans.jsonl": {
+      "sha256": "c046d1e0250888697dcad4c6d91e2771e9227a0f39be2dd151c10d78414d3660",
+      "bytes": 342567,
+      "records": 242,
+      "questions": 726,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.supply_chain_logistics.zh-Hant.jsonl": {
+      "sha256": "28cb31a6c366e074d878eb2395e27ae894f5c44311520fdfd22950f23c23db66",
+      "bytes": 357177,
+      "records": 250,
+      "questions": 750,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.telecom_network_ops.en.jsonl": {
+      "sha256": "f84b8aaf226630b0cac2f76b25a7b44ea124d7493a51b2848b1560e73b1880c2",
+      "bytes": 430933,
+      "records": 251,
+      "questions": 753,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.telecom_network_ops.zh-Hans.jsonl": {
+      "sha256": "ea5f1399790059671d5ae9d71d837387761511231721f2f7d5eb71934d678fd5",
+      "bytes": 353886,
+      "records": 238,
+      "questions": 714,
+      "split": "test",
+      "origin": "custom"
+    },
+    "test/00-llm.telecom_network_ops.zh-Hant.jsonl": {
+      "sha256": "ea8a03a9eea129e8b3b156e5fc804ea0e1f3e26a7f6c1a3fdf5811aa4e3063ae",
+      "bytes": 526019,
+      "records": 354,
+      "questions": 1062,
+      "split": "test",
+      "origin": "custom"
+    },
+    "dev/00-llm.agent_tool_governance.en.jsonl": {
+      "sha256": "1a104a4c38336ffb86934f18cde543c67fde5db0f161733fc17ec2e60a96daf9",
+      "bytes": 27493,
+      "records": 17,
+      "questions": 51,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.agent_tool_governance.zh-Hans.jsonl": {
+      "sha256": "f1c4a271cfd069e9c883e1d74cb2fbe17a1a5eaad54caed65850a1f68daadbc9",
+      "bytes": 23199,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.agent_tool_governance.zh-Hant.jsonl": {
+      "sha256": "4fc9a3cd04e3e0ccdec20d35b0f8350ef4a5ba6a925f2ca1d54c9391d5141b84",
+      "bytes": 43620,
+      "records": 31,
+      "questions": 93,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.content_safety_ops.en.jsonl": {
+      "sha256": "a46ad080566eef95e1b1f15facfea64aa5976152e193dff5c2d58eee6f46c514",
+      "bytes": 31722,
+      "records": 20,
+      "questions": 60,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.content_safety_ops.zh-Hans.jsonl": {
+      "sha256": "cd6231a623fc370590218e45ec5176c3181ac2814f2032aaf26be55241228566",
+      "bytes": 22825,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.content_safety_ops.zh-Hant.jsonl": {
+      "sha256": "e1d8bdbac2dbde8dc0ee762e62c0c0b3924852b3c3e913179db5f138da78442a",
+      "bytes": 26692,
+      "records": 20,
+      "questions": 60,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.embodied_game_ops.en.jsonl": {
+      "sha256": "ae68d8d024e8fff67a290ef23742e518c56b12360353f890486ce8c5d5c1d0ab",
+      "bytes": 23255,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.embodied_game_ops.zh-Hans.jsonl": {
+      "sha256": "0da1bebba524c38aaff9679089a45d9489618c06738fad667c49a183c55c609b",
+      "bytes": 27661,
+      "records": 20,
+      "questions": 60,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.embodied_game_ops.zh-Hant.jsonl": {
+      "sha256": "5102e29a8bf3b854fece7f5aca3104a67ea0941d143058a4be3306e8ded22f09",
+      "bytes": 29606,
+      "records": 21,
+      "questions": 63,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.energy_utilities.en.jsonl": {
+      "sha256": "20711eb716834bd78980336fba04c13b33e5af2cac2e0a68ad770abfad5f6796",
+      "bytes": 20315,
+      "records": 12,
+      "questions": 36,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.energy_utilities.zh-Hans.jsonl": {
+      "sha256": "a62e8876b70b65c471cfc6cb7129921cf4fc5da6127fa7188d330a1f2e284df6",
+      "bytes": 31413,
+      "records": 22,
+      "questions": 66,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.energy_utilities.zh-Hant.jsonl": {
+      "sha256": "199bd4fe4ec89076e760860e84c8189232b36ef70113aae3bb15a6214feb02fa",
+      "bytes": 23754,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.finance_insurance.en.jsonl": {
+      "sha256": "01de16d4d490e802eb30f4d2ed2bf5fa31dc9bbc9476c88377f92a5b5c44afee",
+      "bytes": 26239,
+      "records": 15,
+      "questions": 45,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.finance_insurance.zh-Hans.jsonl": {
+      "sha256": "6ee5393336fb3e0f6cbb33582fb225cb3b44e6565cc0a2a2cf573e7ac038165c",
+      "bytes": 35550,
+      "records": 24,
+      "questions": 72,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.finance_insurance.zh-Hant.jsonl": {
+      "sha256": "b57e0e88acb7059004a979951cc2303a1f9c00557a98e66bde91d311ccacbd36",
+      "bytes": 35164,
+      "records": 24,
+      "questions": 72,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.healthcare_logistics.en.jsonl": {
+      "sha256": "020018482bf8fda56b0c3611a7a540d36c29272e970e13695838bb686936a2ad",
+      "bytes": 29863,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.healthcare_logistics.zh-Hans.jsonl": {
+      "sha256": "c4edb93f581832a102f1482a95c229a43f69961579e335dc5ed45dbf217db688",
+      "bytes": 23671,
+      "records": 15,
+      "questions": 45,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.healthcare_logistics.zh-Hant.jsonl": {
+      "sha256": "3e45ed441ce4ad518ae0c7ace96ddb5d33be2013a76f9ba7bd259382ea1c74cc",
+      "bytes": 28580,
+      "records": 18,
+      "questions": 54,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.hr_recruiting.en.jsonl": {
+      "sha256": "6af675ebb04ff3b3e0c0898c4218e2b9abaed7dfb5b8af172287a3aa8c3fcdab",
+      "bytes": 35158,
+      "records": 20,
+      "questions": 60,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.hr_recruiting.zh-Hans.jsonl": {
+      "sha256": "7e44f2c67ce1c48eeeec268f926854dc6997deb74ea274f7c843e7455f9a0684",
+      "bytes": 18517,
+      "records": 13,
+      "questions": 39,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.hr_recruiting.zh-Hant.jsonl": {
+      "sha256": "470fc51b6aa5a876e27635c6a17918cd6c616168e23a9c59e4e7f4f2ca3f1d25",
+      "bytes": 24612,
+      "records": 17,
+      "questions": 51,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.life_sciences_lab.en.jsonl": {
+      "sha256": "a2383368931cfe0ae826c25133ae4356f70760111c7530f401dfd1dcbc687e8f",
+      "bytes": 20050,
+      "records": 12,
+      "questions": 36,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.life_sciences_lab.zh-Hans.jsonl": {
+      "sha256": "321a0af97521216831c78b3621e4250be5bd5e08723618e425f24ba930f46f45",
+      "bytes": 18807,
+      "records": 13,
+      "questions": 39,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.life_sciences_lab.zh-Hant.jsonl": {
+      "sha256": "9dbc2a51a973589d8186c3f51ef36d372da4eaba18363985e6d39325a32741b6",
+      "bytes": 24178,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.manufacturing_quality.en.jsonl": {
+      "sha256": "1de340959ac53d488ed3c7526f2ab39faf5e8df397e1ff241d2ede4d90906042",
+      "bytes": 49479,
+      "records": 30,
+      "questions": 90,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.manufacturing_quality.zh-Hans.jsonl": {
+      "sha256": "dd536e7bf78bc46132a38759691c13db50a0eacc6f413028d93e7c3c46c6c732",
+      "bytes": 15483,
+      "records": 11,
+      "questions": 33,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.manufacturing_quality.zh-Hant.jsonl": {
+      "sha256": "2ed176d6fd20d3378cac6f018f0c72dc81da904989c01cca5487dca8e50f4c04",
+      "bytes": 31842,
+      "records": 23,
+      "questions": 69,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.public_sector_services.en.jsonl": {
+      "sha256": "c69e51e8c1a27973059187a544ad14ae5602d0e324476987e1d6120b8e4e696d",
+      "bytes": 28241,
+      "records": 14,
+      "questions": 42,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.public_sector_services.zh-Hans.jsonl": {
+      "sha256": "ba74a436dfa4cf43f2d80166f0a5c958d8221ef4c01ee88dfd20b9cd26a09c63",
+      "bytes": 32568,
+      "records": 21,
+      "questions": 63,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.public_sector_services.zh-Hant.jsonl": {
+      "sha256": "375943edaee8b94cb69db54cdfca7e4cbbf3d29c1ae76e1f1479686d0108499a",
+      "bytes": 35278,
+      "records": 23,
+      "questions": 69,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.retail_ecommerce.en.jsonl": {
+      "sha256": "7486bbf0941ce2d158116d34776c894b4c940f663ff88a248f875b659e8a4544",
+      "bytes": 28043,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.retail_ecommerce.zh-Hans.jsonl": {
+      "sha256": "c3efbca6ce6da82f5d5b64c175672ddb9b87fe148333849117eb475508a69e17",
+      "bytes": 32035,
+      "records": 22,
+      "questions": 66,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.retail_ecommerce.zh-Hant.jsonl": {
+      "sha256": "a24f3b036e298f560e1a8994b30c5c8760e34a562622ca6d12ae9b5d4b6f57e6",
+      "bytes": 36038,
+      "records": 26,
+      "questions": 78,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.supply_chain_logistics.en.jsonl": {
+      "sha256": "587aba65df32b4ee5014f291e3c065933d9673df3a6ad97417ecd2ad90156fd3",
+      "bytes": 22269,
+      "records": 14,
+      "questions": 42,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.supply_chain_logistics.zh-Hans.jsonl": {
+      "sha256": "765ec1e37b451b3a0dff73bbcd30c936a3cae3affbc6cae25e022b38e61d1f8e",
+      "bytes": 11301,
+      "records": 8,
+      "questions": 24,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.supply_chain_logistics.zh-Hant.jsonl": {
+      "sha256": "7d2761dcc3ccbda4b7e178296e8a7165fd73940052f261ecfbc488dd9bc34f97",
+      "bytes": 27596,
+      "records": 19,
+      "questions": 57,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.telecom_network_ops.en.jsonl": {
+      "sha256": "785a9ae4064585a6c4924ae916ade0cdc5c9e3be6da40a888f8c836f49e3e5ac",
+      "bytes": 25942,
+      "records": 15,
+      "questions": 45,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.telecom_network_ops.zh-Hans.jsonl": {
+      "sha256": "4b7b0996158fc2fef3b52265bb2f4bd8f65ed5822361ca402875df8d007a98a1",
+      "bytes": 17207,
+      "records": 12,
+      "questions": 36,
+      "split": "dev",
+      "origin": "custom"
+    },
+    "dev/00-llm.telecom_network_ops.zh-Hant.jsonl": {
+      "sha256": "5f5f15b48649d1ffa2d585611780122b315fae7671fa50801c6781e458edcbcc",
+      "bytes": 24555,
+      "records": 16,
+      "questions": 48,
+      "split": "dev",
+      "origin": "custom"
     }
   },
   "per_category": {
@@ -1277,13 +1277,13 @@
         "records": 9305,
         "questions": 27915
       },
-      "dev": {
-        "records": 64,
-        "questions": 192
-      },
       "test": {
         "records": 908,
         "questions": 2724
+      },
+      "dev": {
+        "records": 64,
+        "questions": 192
       }
     },
     "content_safety_ops": {
@@ -1291,41 +1291,41 @@
         "records": 7512,
         "questions": 22536
       },
-      "dev": {
-        "records": 56,
-        "questions": 168
-      },
       "test": {
         "records": 738,
         "questions": 2214
+      },
+      "dev": {
+        "records": 56,
+        "questions": 168
       }
     },
     "embodied_game_ops": {
       "train": {
-        "records": 7397,
-        "questions": 22191
-      },
-      "dev": {
-        "records": 57,
-        "questions": 171
+        "records": 7406,
+        "questions": 22218
       },
       "test": {
         "records": 688,
         "questions": 2064
+      },
+      "dev": {
+        "records": 57,
+        "questions": 171
       }
     },
     "energy_utilities": {
       "train": {
-        "records": 6951,
-        "questions": 20853
-      },
-      "dev": {
-        "records": 50,
-        "questions": 150
+        "records": 6963,
+        "questions": 20889
       },
       "test": {
         "records": 662,
         "questions": 1986
+      },
+      "dev": {
+        "records": 50,
+        "questions": 150
       }
     },
     "finance_insurance": {
@@ -1333,27 +1333,27 @@
         "records": 7901,
         "questions": 23703
       },
-      "dev": {
-        "records": 63,
-        "questions": 189
-      },
       "test": {
         "records": 770,
         "questions": 2310
+      },
+      "dev": {
+        "records": 63,
+        "questions": 189
       }
     },
     "healthcare_logistics": {
       "train": {
-        "records": 7563,
-        "questions": 22689
-      },
-      "dev": {
-        "records": 49,
-        "questions": 147
+        "records": 7575,
+        "questions": 22725
       },
       "test": {
         "records": 710,
         "questions": 2130
+      },
+      "dev": {
+        "records": 49,
+        "questions": 147
       }
     },
     "hr_recruiting": {
@@ -1361,27 +1361,27 @@
         "records": 7243,
         "questions": 21729
       },
-      "dev": {
-        "records": 50,
-        "questions": 150
-      },
       "test": {
         "records": 668,
         "questions": 2004
+      },
+      "dev": {
+        "records": 50,
+        "questions": 150
       }
     },
     "life_sciences_lab": {
       "train": {
-        "records": 7531,
-        "questions": 22593
-      },
-      "dev": {
-        "records": 41,
-        "questions": 123
+        "records": 7543,
+        "questions": 22629
       },
       "test": {
         "records": 707,
         "questions": 2121
+      },
+      "dev": {
+        "records": 41,
+        "questions": 123
       }
     },
     "manufacturing_quality": {
@@ -1389,27 +1389,27 @@
         "records": 8940,
         "questions": 26820
       },
-      "dev": {
-        "records": 64,
-        "questions": 192
-      },
       "test": {
         "records": 880,
         "questions": 2640
+      },
+      "dev": {
+        "records": 64,
+        "questions": 192
       }
     },
     "public_sector_services": {
       "train": {
-        "records": 7677,
-        "questions": 23031
-      },
-      "dev": {
-        "records": 58,
-        "questions": 174
+        "records": 7689,
+        "questions": 23067
       },
       "test": {
         "records": 741,
         "questions": 2223
+      },
+      "dev": {
+        "records": 58,
+        "questions": 174
       }
     },
     "retail_ecommerce": {
@@ -1417,13 +1417,13 @@
         "records": 9417,
         "questions": 28251
       },
-      "dev": {
-        "records": 64,
-        "questions": 192
-      },
       "test": {
         "records": 882,
         "questions": 2646
+      },
+      "dev": {
+        "records": 64,
+        "questions": 192
       }
     },
     "supply_chain_logistics": {
@@ -1431,13 +1431,13 @@
         "records": 7288,
         "questions": 21864
       },
-      "dev": {
-        "records": 41,
-        "questions": 123
-      },
       "test": {
         "records": 708,
         "questions": 2124
+      },
+      "dev": {
+        "records": 41,
+        "questions": 123
       }
     },
     "telecom_network_ops": {
@@ -1445,18 +1445,20 @@
         "records": 8859,
         "questions": 26577
       },
-      "dev": {
-        "records": 43,
-        "questions": 129
-      },
       "test": {
         "records": 843,
         "questions": 2529
+      },
+      "dev": {
+        "records": 43,
+        "questions": 129
       }
     }
   },
   "quota": {
-    "train_questions_per_category": 2000,
-    "test_questions_per_category": 100
+    "train_records_per_category_language": 3000,
+    "train_questions_per_category": 9000,
+    "test_questions_per_category": 500,
+    "post_questions_per_category": 200
   }
 }

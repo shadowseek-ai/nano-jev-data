@@ -2,8 +2,8 @@
 
 口径（2026-11-05 需求）：
 - 训练集：每垂类每语言 >= 3000 条记录（每条 3 题，即 >= 9000 题）
-- 测试集：每垂类每语言 >= 500 题
-- 后训练集：每垂类每语言 >= 200 题
+- 测试集：每垂类每语言 >= 500 题（约 167 条记录）
+- 后训练集：每垂类每语言 >= 300 题（= 100 条记录）
 - 开发集：每垂类每语言 >= 100 条记录（上一轮口径，作为参考项）
 
 用法：py artifacts/llm/check_quota.py [--dir data]
@@ -19,7 +19,7 @@ from pathlib import Path
 LANGS = ("zh-Hans", "zh-Hant", "en")
 TRAIN_MIN_RECORDS = 3000
 TEST_MIN_QUESTIONS = 500
-POST_MIN_QUESTIONS = 200
+POST_MIN_QUESTIONS = 300
 DEV_MIN_RECORDS = 100
 QUESTIONS_PER_RECORD = 3
 
