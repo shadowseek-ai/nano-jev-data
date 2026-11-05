@@ -59,13 +59,18 @@ def main() -> int:
             previous = None
 
     files = []
-    for path in sorted(ROOT.glob("train/**/*.jsonl")) + sorted(ROOT.glob("test/*.jsonl")) + sorted(ROOT.glob("dev/*.jsonl")):
+    pattern_dirs = ("train", "test", "dev")
+    paths: list[Path] = []
+    for folder in pattern_dirs:
+        paths.extend(sorted((ROOT / folder).rglob("*.jsonl")))
+    for path in paths:
         if not path.is_file():
             continue
         relative = path.relative_to(ROOT).as_posix()
         split = split_of(relative)
         records = 0
         questions = 0
+        per_combo_local: Counter = Counter()
         with path.open(encoding="utf-8") as handle:
             for line in handle:
                 if not line.strip():
@@ -73,6 +78,7 @@ def main() -> int:
                 record = json.loads(line)
                 records += 1
                 questions += len(record.get("questions", {}))
+                per_combo_local[f"{record.get('lang')}_{record.get('question_lang', record.get('lang'))}"] += 1
         files.append({
             "path": relative,
             "sha256": sha256_file(path),
@@ -81,6 +87,7 @@ def main() -> int:
             "questions": questions,
             "split": split,
             "origin": "custom",
+            "per_combo": dict(sorted(per_combo_local.items())),
         })
 
     splits: dict[str, dict[str, int]] = {}
@@ -96,6 +103,11 @@ def main() -> int:
         per_category[category][split]["records"] += entry["records"]
         per_category[category][split]["questions"] += entry["questions"]
 
+    per_combo: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    for entry in files:
+        for combo, count in entry.get("per_combo", {}).items():
+            per_combo[entry["split"]][combo] += count
+
     manifest = {
         "schema_version": 1,
         "dataset_version": next_version(previous),
@@ -108,11 +120,12 @@ def main() -> int:
         "splits": splits,
         "files": {entry["path"]: {key: value for key, value in entry.items() if key != "path"} for entry in files},
         "per_category": {category: dict(stats) for category, stats in sorted(per_category.items())},
+        "per_combo": {split: dict(sorted(combos.items())) for split, combos in sorted(per_combo.items())},
         "quota": {
             "train_records_per_category_language": TARGET_TRAIN_RECORDS,
             "train_questions_per_category": TARGET_TRAIN_RECORDS * 3,
-            "test_questions_per_category": 500,
-            "post_questions_per_category": 200,
+            "test_records_per_category_language": 500,
+            "post_records_per_category_language": 300,
         },
     }
     if not dry_run:

@@ -39,6 +39,23 @@ SPECS = ROOT / "specs"
 TRAIN = ROOT / "train"
 SPLIT_DIRS = ("train", "train/posttrain", "test", "dev")
 DEFAULT_WORK = ROOT / "artifacts" / "llm" / "topup"
+ENV_FILE = ROOT / "artifacts" / "llm" / ".env.local"
+
+
+def load_env_file(path: Path | None = None) -> None:
+    """从 gitignored 的 .env.local 读取凭据，避免把 key 写进命令行或仓库。"""
+    path = path or ENV_FILE
+    if not path.exists():
+        return
+    for line in path.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        name, value = line.split("=", 1)
+        os.environ.setdefault(name.strip(), value.strip())
+
+
+load_env_file()
 LANGS = ("zh-Hans", "zh-Hant", "en")
 SOURCE = "zh-Hans"
 TARGETS = ("zh-Hant", "en")
@@ -536,27 +553,60 @@ def build_translation_prompt(rows: list[dict], target: str) -> str:
 {json.dumps(items, ensure_ascii=False)}"""
 
 
+CN_UNITS = {"万": 10000, "萬": 10000, "亿": 100000000, "億": 100000000}
+EN_MULT = {"thousand": 1e3, "million": 1e6, "billion": 1e9, "hundred": 100}
+EN_WORDS = {
+    "zero": 0, "one": 1, "two": 2, "three": 3, "four": 4, "five": 5, "six": 6, "seven": 7,
+    "eight": 8, "nine": 9, "ten": 10, "eleven": 11, "twelve": 12, "thirteen": 13, "fourteen": 14,
+    "fifteen": 15, "sixteen": 16, "seventeen": 17, "eighteen": 18, "nineteen": 19, "twenty": 20,
+    "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60, "seventy": 70, "eighty": 80, "ninety": 90,
+}
+CN_NUM = re.compile(r"(\d+(?:\.\d+)?)\s*(万|萬|亿|億)?")
+EN_NUM = re.compile(r"(\d+(?:[.,]\d+)*)\s*(thousand|million|billion|hundred)?", re.I)
+
+
+def numeric_values(text: str, lang: str) -> Counter:
+    """把文本里的数值抽成多重集合，中文“万/亿”与英文 million/thousand 统一换算。"""
+    values: Counter = Counter()
+    if lang == "en":
+        for match in EN_NUM.finditer(text):
+            raw = match.group(1).replace(",", "")
+            try:
+                value = float(raw)
+            except ValueError:
+                continue
+            if match.group(2):
+                value *= EN_MULT[match.group(2).lower()]
+            values[round(value, 6)] += 1
+        for match in re.finditer(r"[A-Za-z]+", text):
+            word = match.group(0).lower()
+            if word in EN_WORDS:
+                values[float(EN_WORDS[word])] += 1
+            elif word in ("a", "an"):
+                values[1.0] += 1
+        return values
+    for match in CN_NUM.finditer(text):
+        base = float(match.group(1))
+        values[round(base * CN_UNITS.get(match.group(2), 1), 6)] += 1
+    return values
+
+
 def translation_validate(text: str, source: str, lang: str) -> tuple[bool, str]:
     if not isinstance(text, str) or not text.strip():
         return False, "empty"
     text = text.strip()
     if set(PLACEHOLDER.findall(text)) != set(PLACEHOLDER.findall(source)):
         return False, "placeholder"
-    remaining = list(NUMBER.findall(text))
-    for token in NUMBER.findall(source):
-        if token in remaining:
-            remaining.remove(token)
-            continue
-        units = re.search(re.escape(token) + r"\s*(万|亿)", source)
-        hit = None
-        if units:
-            base = int(float(token.replace(",", "")))
-            scaled = base * (10000 if units.group(1) == "万" else 100000000)
-            hit = next((item for item in (str(scaled), f"{scaled:,}") if item in remaining), None)
-        if hit is not None:
-            remaining.remove(hit)
-            continue
-        return False, "number"
+    # 数值用多重集合比较：中文万/亿、英文 thousand/million、英文数词都归一化后再比。
+    source_values = numeric_values(source, "zh-Hans")
+    if lang == "en":
+        missing = source_values - numeric_values(text, "en")
+        if missing:
+            return False, "number"
+    else:
+        missing = source_values - numeric_values(text, "zh-Hant")
+        if missing:
+            return False, "number"
     return validate_state(text, lang, {"questions": {}})
 
 

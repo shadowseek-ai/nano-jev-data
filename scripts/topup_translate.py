@@ -2,7 +2,8 @@
 
 - 源记录从 ``<work>/seeds.jsonl`` 增量读取；
 - 繁体中文用 OpenCC s2twp 做确定性转换，保证占位符/数字/事实严格对齐；
-- 英文调用 LLM，2 个线程、每请求 4 条；
+- 英文默认走 **Edge 翻译 API**（免费、约 0.2 秒/条），只有 Edge 反复失败的记录
+  才回落到 LLM 修复，避免不必要的模型费用；
 - 译文写入 ``<work>/translations.jsonl``，不干扰生成进程；
 - 生成完成标记 ``<work>/generation.done`` 出现且无缺口后退出。
 """
@@ -18,11 +19,47 @@ import time
 from collections import Counter
 from pathlib import Path
 
+import edge_translate
 import topup_pretrain as core
 
 WRITE_LOCK = threading.Lock()
 STOP = threading.Event()
 STATE_LOCK = threading.Lock()
+ENGINE = "edge"
+
+
+def translate_english(rows: list[dict]) -> list[str | None]:
+    """按批翻译成英文：Edge 为主，逐条校验数值与占位符。"""
+    if not rows:
+        return []
+    texts: list[str | None] = []
+    if ENGINE == "edge":
+        try:
+            outputs = edge_translate.translate([row["state"] for row in rows], "en")
+        except Exception as exc:  # noqa: BLE001
+            core.log(f"Edge 翻译失败：{type(exc).__name__} {str(exc)[:100]}")
+            outputs = [""] * len(rows)
+    else:
+        outputs = core.translate_raw(rows, "en")
+    for row, candidate in zip(rows, outputs):
+        if not candidate:
+            texts.append(None)
+            continue
+        ok, _ = core.translation_validate(candidate, row["state"], "en")
+        texts.append(candidate.strip() if ok else None)
+    if ENGINE == "edge" and any(text is None for text in texts):
+        # 同一批里个别句子被 Edge 改写坏了：单条重试一次。
+        for index, text in enumerate(texts):
+            if text is not None:
+                continue
+            try:
+                single = edge_translate.translate([rows[index]["state"]], "en")
+            except Exception:  # noqa: BLE001
+                single = [""]
+            candidate = (single[0] or "").strip()
+            if candidate and core.translation_validate(candidate, rows[index]["state"], "en")[0]:
+                texts[index] = candidate
+    return texts
 
 
 def load_sources(path: Path) -> dict[str, dict]:
@@ -69,8 +106,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--workers", type=int, default=2)
     parser.add_argument("--batch", type=int, default=4)
     parser.add_argument("--max-hours", type=float, default=14.0)
+    parser.add_argument("--engine", choices=("edge", "llm"), default="edge", help="英文翻译引擎，默认 Edge（免费）")
+    parser.add_argument("--allow-llm-repair", action="store_true", default=True,
+                        help="Edge 反复失败时允许用 LLM 兜底（默认开启，只针对失败样本）")
+    parser.add_argument("--no-llm-repair", dest="allow_llm_repair", action="store_false")
     parser.add_argument("--hant-llm", action="store_true", help="繁体也用 LLM（默认用 OpenCC）")
     args = parser.parse_args(argv)
+    global ENGINE
+    ENGINE = args.engine
 
     work = Path(args.work)
     work.mkdir(parents=True, exist_ok=True)
@@ -157,19 +200,22 @@ def main(argv: list[str] | None = None) -> int:
                 time.sleep(2)
                 continue
             try:
-                texts = core.translate_rows(batch, "en")
+                texts = translate_english(batch)
             except Exception as exc:  # noqa: BLE001
                 core.log(f"英文翻译异常：{type(exc).__name__} {str(exc)[:100]}")
                 texts = [None] * len(batch)
             accepted = 0
             for row, text in zip(batch, texts):
                 if text is None:
-                    # 整批译文里这一条不合格：带着缺失 token 回灌修复。
-                    text = core.translate_with_repair(row, "en", attempts=4)
-                if text is None:
                     with STATE_LOCK:
                         attempts[(row["source_id"], "en")] += 1
-                        if attempts[(row["source_id"], "en")] >= 3:
+                        exhausted = attempts[(row["source_id"], "en")] >= 3
+                    if exhausted and args.allow_llm_repair:
+                        # 只有 Edge 反复失败时才动用 LLM，控制费用。
+                        text = core.translate_with_repair(row, "en", attempts=2)
+                if text is None:
+                    with STATE_LOCK:
+                        if attempts[(row["source_id"], "en")] >= 6:
                             failed.add((row["source_id"], "en"))
                             core.log(f"英文翻译失败，跳过 {row['source_id']}")
                     continue
