@@ -305,9 +305,11 @@ def validate_state(state: str, lang: str, task: dict) -> tuple[bool, str]:
     else:
         if T2S.convert(text) == text:
             return False, "not-traditional"
-    for name in task["questions"]:
-        if re.search(rf"(?<![A-Za-z]){re.escape(name)}(?![A-Za-z])", text):
-            return False, "field-leak"
+    # 字段名泄漏只在中文语料里判定：英文里 severity/priority 这类词是正常用词。
+    if lang != "en":
+        for name in task["questions"]:
+            if re.search(rf"(?<![A-Za-z]){re.escape(name)}(?![A-Za-z])", text):
+                return False, "field-leak"
     return True, "ok"
 
 
