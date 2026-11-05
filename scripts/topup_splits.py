@@ -222,6 +222,7 @@ def generate(plan: dict, specs: dict, store: MultiStore, examples: dict, seen: d
             split, category, task_id, _, _ = job
             core.log(f"生成 +{accepted} {split}/{category}/{task_id}")
 
+    missing: dict[str, int] = {}
     for round_no in range(1, 6):
         jobs = []
         for split, categories in plan.items():
@@ -433,6 +434,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--translate", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     parser.add_argument("--rounds", type=int, default=1)
+    parser.add_argument("--from-files", action="store_true",
+                        help="生成目标按文件实际缺口计算（用于已合并过但仍缺口的增量补齐）")
     args = parser.parse_args(argv)
 
     specs = core.load_specs()
@@ -454,6 +457,21 @@ def main(argv: list[str] | None = None) -> int:
 
     store = MultiStore(work / "seeds.jsonl", work / "translations.jsonl")
     core.log(f"已有种子：source={len(store.sources)} translation={len(store.translations)}")
+
+    if args.generate and args.from_files:
+        # 按“文件里还缺多少”而不是“种子里已有多少”来定目标：
+        # 已合并过但仍缺口的场景需要再生成增量。
+        for split, categories in plan.items():
+            for category, entry in categories.items():
+                deficit = entry["add"]
+                if deficit <= 0:
+                    continue
+                tasks = list(entry["tasks"])
+                base, extra = divmod(deficit, len(tasks))
+                for index, task in enumerate(tasks):
+                    add = base + (1 if index < extra else 0)
+                    entry["tasks"][task] = store.counts[(split, category, task)] + add
+        core.log("已按文件缺口重设生成目标（--from-files）")
 
     if args.generate:
         _, _, examples = core.load_existing()
