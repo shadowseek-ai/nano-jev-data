@@ -118,7 +118,7 @@ def main() -> int:
                 lang_records[record.get("lang")] += 1
         counts[relative] = counter
 
-    files = list(ROOT.glob("train/**/*.jsonl")) + list(ROOT.glob("test/*.jsonl")) + list(ROOT.glob("dev/*.jsonl"))
+    files = [p for d in ("train", "test", "dev") for p in (ROOT / d).rglob("*.jsonl")]
     total_bytes = sum(path.stat().st_size for path in files)
     total_records = sum(c["records"] for c in counts.values())
     total_questions = sum(c["questions"] for c in counts.values())
@@ -131,7 +131,7 @@ def main() -> int:
     text = re.sub(r"\| 更新时间 \| [^|]+ \|", f"| 更新时间 | {updated} |", text)
     text = re.sub(
         r"\| 规模 \| \*\*[^*]+\*\*[^|]*\|",
-        f"| 规模 | **{total_records:,} 条记录 / {total_questions:,} 题**，13 个垂类，{len(files)} 个文件，约 {size_mb:.0f} MB |",
+        f"| 规模 | **{total_records:,} 条记录 / {total_questions:,} 题**（三语合计），13 个垂类，{len(files)} 个文件，约 {size_mb:.0f} MB |",
         text,
     )
     rows = {
