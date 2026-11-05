@@ -66,6 +66,11 @@ python scripts/check_quota.py --dir .     # 逐垂类逐语言配额
 
 ## 说明
 
-- 数据全部由 LLM 生成，不含真实个人信息；场景中的编号均为占位符（如 `{ticket}`）。
-- 任何 `.jsonl` 改动后需 `nano-jev data freeze` 重新生成 `MANIFEST.json`，否则 `verify` 失败。
-- 生成、翻译与校验脚本见 [scripts/README.md](scripts/README.md)，凭据只从环境变量读取，仓库内不保存任何密钥。
+- 数据全部由 LLM 生成，不含真实个人信息；场景中的编号已渲染为虚构值（单号、设备码、站点码等）。
+- **案情中心**：同一 `case_id` 在三种语言下是同一个案子，`labels` 只由简体中文案情算一次，
+  翻译不改判定；`question_lang` 是问题语言，`source_lang` 是案情源语言。
+- 混合样本无需新生成：`train/mix/`、`test/mix/` 由 `state 语言 × 问题语言` 派生 6 种组合。
+- 任何 `.jsonl` 改动后需重新生成 `MANIFEST.json`：
+  `python scripts/freeze_manifest.py`（只扫描 `train/`、`test/`、`dev/`）。
+- 生成、翻译与校验脚本见 [scripts/README.md](scripts/README.md)，版本变更见 [CHANGELOG.md](CHANGELOG.md)；
+  凭据只从环境变量或 `artifacts/llm/.env.local` 读取，仓库内不保存任何密钥。
