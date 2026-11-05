@@ -61,6 +61,46 @@ def lang_stats_block() -> str:
     return "\n".join(lines)
 
 
+def combo_stats_block() -> str:
+    """state 语言 × 问题语言 的组合条数（含混合分片与对抗子集）。"""
+    langs = LANGS
+    combine = {lang: {q: 0 for q in langs} for lang in langs}
+    adv = {lang: {q: 0 for q in langs} for lang in langs}
+    for split in ("train", "test", "dev"):
+        folder = ROOT / split
+        if not folder.exists():
+            continue
+        for path in folder.glob("00-llm.*.jsonl"):
+            rel = path.relative_to(ROOT).as_posix()
+            if rel.startswith(("train/mix", "train/adv", "test/mix", "test/adv")):
+                continue
+            for line in path.open(encoding="utf-8"):
+                if not line.strip():
+                    continue
+                record = json.loads(line)
+                combine[record.get("lang")][record.get("question_lang", record.get("lang"))] += 1
+        for path in list((ROOT / split / "mix").glob("*.jsonl")) if (ROOT / split / "mix").exists() else []:
+            for line in path.open(encoding="utf-8"):
+                if line.strip():
+                    record = json.loads(line)
+                    combine[record["lang"]][record["question_lang"]] += 1
+        for path in list((ROOT / split / "adv").glob("*.jsonl")) if (ROOT / split / "adv").exists() else []:
+            for line in path.open(encoding="utf-8"):
+                if line.strip():
+                    record = json.loads(line)
+                    adv[record["lang"]][record["question_lang"]] += 1
+    header = "| state 语言 \\ 问题语言 | " + " | ".join(f"`{q}`" for q in langs) + " |"
+    lines = [header, "|---|" + "---:|" * len(langs)]
+    for state_lang in langs:
+        cells = []
+        for q in langs:
+            value = combine[state_lang][q]
+            extra = adv[state_lang][q]
+            cells.append(f"{value:,}" + (f"（+{extra:,} 对抗）" if extra else ""))
+        lines.append(f"| `{state_lang}` | " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+
 def main() -> int:
     manifest = json.loads((ROOT / "MANIFEST.json").read_text(encoding="utf-8"))
     counts: dict[str, Counter] = {}
@@ -118,6 +158,13 @@ def main() -> int:
     text = re.sub(
         r"(<!-- lang-stats:start -->)(.*?)(<!-- lang-stats:end -->)",
         lambda m: f"{m.group(1)}\n{block}\n{m.group(3)}",
+        text,
+        flags=re.S,
+    )
+    combo_block = combo_stats_block()
+    text = re.sub(
+        r"(<!-- combo-stats:start -->)(.*?)(<!-- combo-stats:end -->)",
+        lambda m: f"{m.group(1)}\n{combo_block}\n{m.group(3)}",
         text,
         flags=re.S,
     )
