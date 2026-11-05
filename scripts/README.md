@@ -58,6 +58,41 @@ python scripts/check_quota.py --dir data
 nano-jev data freeze --dir data --note "..."
 ```
 
+## 预训练集补齐到 3000（2026-11-05 口径）
+
+当前仓库的预训练集按“每垂类每语言 >= 3000 条记录”补齐，使用独立脚本，
+不依赖 nano-jev 的 `src/`。硬性并发口径：
+
+| 阶段 | 并发 | 每请求条数 |
+|---|---:|---:|
+| 简体中文源语言生成 | 2 | 4 |
+| 对齐翻译（zh-Hant + en 共用） | 2 | 4 |
+
+```bash
+# 生成源语言（可断点续跑）
+python scripts/topup_pretrain.py --generate --work artifacts/llm/topup
+
+# 同时增量翻译（繁中走 OpenCC 精确转换，英文走 LLM，2 并发 × 4 条）
+python scripts/topup_translate.py --work artifacts/llm/topup --workers 2 --batch 4
+
+# 生成完成后写入标记，翻译进程收尾退出
+New-Item artifacts/llm/topup/generation.done
+
+# 合并进 train/，并核验 3000 配额
+python scripts/topup_pretrain.py --merge --work artifacts/llm/topup
+
+# 审计种子（标签域 / 语言 / 占位符 / 数字 / 三语对齐）
+python scripts/topup_audit.py artifacts/llm/topup
+
+# 重新冻结 MANIFEST.json（只扫描 train/test/dev）
+python scripts/freeze_manifest.py
+python scripts/check_quota.py --dir .
+```
+
+`topup_pretrain.py` 只从环境变量读取 `LLM_API_BASE` / `LLM_API_KEY` / `LLM_MODEL`，
+密钥不落盘；生成、翻译、合并都按内容指纹去重，并保留 `artifacts/llm/topup/` 作为
+可恢复的中间产物（该目录不入库）。
+
 ## 脚本职责
 
 | 脚本 | 作用 |
@@ -74,6 +109,10 @@ nano-jev data freeze --dir data --note "..."
 | `progress.py` | 统计每语言已译量、逐组缺口与预计剩余时间 |
 | `check_quota.py` | 逐垂类逐语言的 train/test/post 配额核验（本数据集口径） |
 | `export_specs.py` | 导出每个垂类的任务规格到 `specs/`，供生成与审计引用 |
+| `topup_pretrain.py` | 按 3000 配额生成源语言、翻译、合并与计数报告 |
+| `topup_translate.py` | 与生成并行的增量翻译（英文 LLM、繁中 OpenCC） |
+| `topup_audit.py` | 审计 topup 种子的标签域、语言、占位符/数字与三语对齐 |
+| `freeze_manifest.py` | 只扫描 `train/test/dev` 重新生成 `MANIFEST.json` |
 
 ## 目录约定
 

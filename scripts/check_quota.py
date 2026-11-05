@@ -1,7 +1,7 @@
 """核查三语言 × 13 垂类的分项配额。
 
-口径（2026-11-04 需求）：
-- 训练集：每垂类每语言 >= 2000 条记录（每条 3 题，即 >= 6000 题）
+口径（2026-11-05 需求）：
+- 训练集：每垂类每语言 >= 3000 条记录（每条 3 题，即 >= 9000 题）
 - 测试集：每垂类每语言 >= 500 题
 - 后训练集：每垂类每语言 >= 200 题
 - 开发集：每垂类每语言 >= 100 条记录（上一轮口径，作为参考项）
@@ -17,7 +17,7 @@ from collections import Counter
 from pathlib import Path
 
 LANGS = ("zh-Hans", "zh-Hant", "en")
-TRAIN_MIN_RECORDS = 2000
+TRAIN_MIN_RECORDS = 3000
 TEST_MIN_QUESTIONS = 500
 POST_MIN_QUESTIONS = 200
 DEV_MIN_RECORDS = 100
