@@ -94,9 +94,7 @@ def combo_stats_block() -> str:
     for state_lang in langs:
         cells = []
         for q in langs:
-            value = combine[state_lang][q]
-            extra = adv[state_lang][q]
-            cells.append(f"{value:,}" + (f"（+{extra:,} 对抗）" if extra else ""))
+            cells.append(f"{combine[state_lang][q]:,} / {adv[state_lang][q]:,}")
         lines.append(f"| `{state_lang}` | " + " | ".join(cells) + " |")
     return "\n".join(lines)
 

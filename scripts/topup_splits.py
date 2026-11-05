@@ -26,6 +26,7 @@ from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+import case_meta
 import topup_pretrain as core
 
 ROOT = core.ROOT
@@ -313,7 +314,8 @@ def merge(plan: dict, specs: dict, store: MultiStore, dry_run: bool = False) -> 
                 case_id = f"{category}-{int(suffix or 0):06d}"
                 for lang in LANGS:
                     translated = payload[lang]
-                    variant = hashlib.blake2b(translated["state"].encode(), digest_size=2).digest()[0] % 2
+                    state_text, _ = case_meta.render_state(translated["state"], case_id, lang)
+                    variant = hashlib.blake2b(state_text.encode(), digest_size=2).digest()[0] % 2
                     entry = state[lang]
                     entry["index"] += 1
                     record_split = SPLIT_RECORD_SPLIT[split]
@@ -324,14 +326,14 @@ def merge(plan: dict, specs: dict, store: MultiStore, dry_run: bool = False) -> 
                         "category": category,
                         "lang": lang,
                         "style": SPLIT_STYLE[split],
-                        "state": translated["state"],
+                        "state": state_text,
                         "questions": core.question_schema(spec, task, lang, variant),
                         "labels": row["labels"],
                         "case_id": case_id,
                         "question_lang": lang,
                         "source_lang": core.SOURCE,
                     })
-                    entry["states"].add(core.fingerprint(translated["state"]))
+                    entry["states"].add(core.fingerprint(state_text))
                 added_en.append((case_id, payload["en"]["state"]))
 
             for lang in LANGS:

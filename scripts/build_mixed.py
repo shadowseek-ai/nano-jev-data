@@ -76,36 +76,45 @@ def mixed_record(record_by_lang: dict[str, dict], state_lang: str, question_lang
 
 
 def adversarial_record(record_by_lang: dict[str, dict], state_lang: str, question_lang: str, split: str) -> dict | None:
-    """语言对抗：把 state 里“带数字的关键句”替换成另一语言的同句，制造跨语言线索。"""
+    """语言对抗：把 state 里“带数字的关键句”替换成另一语言的同句，制造跨语言线索。
+
+    句数对不齐时（中英标点切分差异很大）退化为**追加**一句跨语言证据句，
+    保证每个组合都能凑够样本量。
+    """
     if state_lang == question_lang:
         return None
     base = record_by_lang[state_lang]
     other = record_by_lang[question_lang]
     base_parts = [s for s in SENT_SPLIT[state_lang].split(base["state"]) if s.strip()]
     other_parts = [s for s in SENT_SPLIT[question_lang].split(other["state"]) if s.strip()]
-    if len(base_parts) != len(other_parts):
+    state: str | None = None
+    if len(base_parts) == len(other_parts):
+        for index in range(len(base_parts) - 1, -1, -1):
+            if NUM.search(base_parts[index]) and len(other_parts[index]) > 8:
+                merged = base_parts[:index] + [other_parts[index]] + base_parts[index + 1:]
+                state = "".join(merged)
+                break
+    if state is None:
+        evidence = next((s.strip() for s in other_parts if NUM.search(s) and len(s.strip()) > 12), None)
+        if evidence is None:
+            return None
+        state = f"{base['state'].rstrip()} {evidence}"
+    if case_meta.residual_placeholders(state):
         return None
-    for index in range(len(base_parts) - 1, -1, -1):
-        if NUM.search(base_parts[index]) and len(other_parts[index]) > 8:
-            merged = base_parts[:index] + [other_parts[index]] + base_parts[index + 1:]
-            state = "".join(merged)
-            if case_meta.residual_placeholders(state):
-                return None
-            return {
-                "id": f"{split}-advlang-{base['category']}-{base['case_id'].split('-')[-1]}-{state_lang.lower()}-{question_lang.lower()}",
-                "split": split,
-                "task": base["task"],
-                "category": base["category"],
-                "lang": state_lang,
-                "question_lang": question_lang,
-                "source_lang": base.get("source_lang", "zh-Hans"),
-                "case_id": base["case_id"],
-                "style": "adv-lang",
-                "state": state,
-                "questions": base["questions"],
-                "labels": base["labels"],
-            }
-    return None
+    return {
+        "id": f"{split}-advlang-{base['category']}-{base['case_id'].split('-')[-1]}-{state_lang.lower()}-{question_lang.lower()}",
+        "split": split,
+        "task": base["task"],
+        "category": base["category"],
+        "lang": state_lang,
+        "question_lang": question_lang,
+        "source_lang": base.get("source_lang", "zh-Hans"),
+        "case_id": base["case_id"],
+        "style": "adv-lang",
+        "state": state,
+        "questions": base["questions"],
+        "labels": base["labels"],
+    }
 
 
 def main(argv: list[str] | None = None) -> int:
