@@ -1,16 +1,16 @@
 {
   "schema_version": 1,
-  "dataset_version": "2026.11.06.2",
+  "dataset_version": "2026.11.06.3",
   "generator": "nano-jev-synth/1",
   "seed": null,
-  "frozen_at": "2026-11-05T16:22:44+00:00",
+  "frozen_at": "2026-11-05T19:00:55+00:00",
   "note": "三语对齐数据集：简体中文为源语言，每垂类每语言 train>=3000 条 / test>=500 题 / post>=200 题，已去重；MIT 许可",
   "license": "MIT",
   "root": "data",
   "splits": {
     "train": {
-      "records": 603765,
-      "questions": 1811295
+      "records": 623265,
+      "questions": 1869795
     },
     "test": {
       "records": 100065,
@@ -2165,6 +2165,435 @@
       "origin": "custom",
       "per_combo": {
         "zh-Hant_zh-Hans": 3009
+      }
+    },
+    "train/nearmiss/30-nearmiss.agent_tool_governance.en.jsonl": {
+      "sha256": "9a16bf73c6ff5a7c31c7de3339bbac26da6a1b1ac2ae87de9858755388efa3fa",
+      "bytes": 858079,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.agent_tool_governance.zh-Hans.jsonl": {
+      "sha256": "b9b717bc53fe19d97a2e9ddb421523c0c5ec89ae85d2f190626abfbb3ae12d7d",
+      "bytes": 743008,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.agent_tool_governance.zh-Hant.jsonl": {
+      "sha256": "58418b9ffe96170029be5662b878f9ee1df1cad128277d8f8469f8443717bb08",
+      "bytes": 744043,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.content_safety_ops.en.jsonl": {
+      "sha256": "59738e15b32394ef4388426e7e4d7aacd092b18b078670ce5357af4a3c9876fb",
+      "bytes": 990702,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.content_safety_ops.zh-Hans.jsonl": {
+      "sha256": "6aff52ff4dc2bf5453296c4236a00bbd628c5955880585f3e83f417edc63b8c1",
+      "bytes": 853016,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.content_safety_ops.zh-Hant.jsonl": {
+      "sha256": "9aab5a244c03d41120f30243f94ce63aad1bc253f73ff2e5913f68d9ee8b7aef",
+      "bytes": 853388,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.embodied_game_ops.en.jsonl": {
+      "sha256": "b1bef3e721bb968f4428b20ebfe759f2eda39ebad8c06311350b4b34dc16eacb",
+      "bytes": 844353,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.embodied_game_ops.zh-Hans.jsonl": {
+      "sha256": "728b3f2dea2fc2ff142de491decd164bdd7451619990aa472687f71284a32b15",
+      "bytes": 743210,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.embodied_game_ops.zh-Hant.jsonl": {
+      "sha256": "b3183ffca771efcce817d8f3aa926f1ff602ae79a77621e0d522c640952156cd",
+      "bytes": 743453,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.energy_utilities.en.jsonl": {
+      "sha256": "162c969e9e6a4d1fd4a574404cfd7119d6f8fa302e42fb5dbb940c42bad974ca",
+      "bytes": 951483,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.energy_utilities.zh-Hans.jsonl": {
+      "sha256": "a42b1142a5469f4362cd7d9f8b9aff954fc46e3a84b4836fcf5dd40c63a18777",
+      "bytes": 822321,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.energy_utilities.zh-Hant.jsonl": {
+      "sha256": "763072e10f3d5eb479a63204b7c887823af6b2f437dac941182ade178da288ef",
+      "bytes": 823131,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.finance_insurance.en.jsonl": {
+      "sha256": "2ac77de1a91366aefc8d659655352df97ff166b679ba3b82188d76f925b7040a",
+      "bytes": 902350,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.finance_insurance.zh-Hans.jsonl": {
+      "sha256": "01a69a94aad60f2ded9e03528ba5880d60b9a1e3bc8265342787c223504a49d0",
+      "bytes": 770935,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.finance_insurance.zh-Hant.jsonl": {
+      "sha256": "027bb3a0b6617d086af01f03d85609b9e15ee37286c022858ddd42ae24e18515",
+      "bytes": 770977,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.healthcare_logistics.en.jsonl": {
+      "sha256": "cc0a4031ec79c7857c3af6bc4896d0fddd68933dc8cff28acceca065d3713fe2",
+      "bytes": 1080367,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.healthcare_logistics.zh-Hans.jsonl": {
+      "sha256": "7b03fdf9cc626bf947a4380430c2e137afc572b1f69e35d669fd29d52e549457",
+      "bytes": 922601,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.healthcare_logistics.zh-Hant.jsonl": {
+      "sha256": "5cd4ac0afbb19c25446c6ad5d134499e268d18363bcff966ab3d39095d27063e",
+      "bytes": 921851,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.hr_recruiting.en.jsonl": {
+      "sha256": "bca5ad68f760aff71e596cce6a6feb426038d38f5cfd6321a542feb24bab1363",
+      "bytes": 993600,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.hr_recruiting.zh-Hans.jsonl": {
+      "sha256": "768720eb19b86945bf6f62d005c9120703cd25b59f8ed966f905dadabd31dab4",
+      "bytes": 851834,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.hr_recruiting.zh-Hant.jsonl": {
+      "sha256": "ff69606dbd681c92a15e56acaf5514950401ef53f0ac8ea3fc7ac0133f7f18d3",
+      "bytes": 851870,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.life_sciences_lab.en.jsonl": {
+      "sha256": "e2d2e1eed8b3f02d3aeac3bda6b9d6e7c27a66c05ffa5be29a6eddcfb171ac75",
+      "bytes": 968257,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.life_sciences_lab.zh-Hans.jsonl": {
+      "sha256": "cb0d84a628d9ff1e2a77e860350239648e0d5595ee2b2743db120648bfc7be5a",
+      "bytes": 833261,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.life_sciences_lab.zh-Hant.jsonl": {
+      "sha256": "4cb3205b2e4d5768150c2acd7d21e19d15a1b14b1c7b18789bff26beb22376f7",
+      "bytes": 839255,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.manufacturing_quality.en.jsonl": {
+      "sha256": "da0e0d293582e3506ea53ea0314dc30faded277fd51242a8630f65c44c9d38ed",
+      "bytes": 960187,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.manufacturing_quality.zh-Hans.jsonl": {
+      "sha256": "ccaa202361c7ceb87aa4a5bc38f9cec1f55365926561522d197250cd8103efd9",
+      "bytes": 814258,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.manufacturing_quality.zh-Hant.jsonl": {
+      "sha256": "a9fa9515837c60408f785d0716cbaffb6cc149437d74c5ce1e2135718b639f12",
+      "bytes": 814336,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.public_sector_services.en.jsonl": {
+      "sha256": "2318677e37264854bafa0be491c24f224670dbbe7cf0eb2cd93d34605650a357",
+      "bytes": 1039061,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.public_sector_services.zh-Hans.jsonl": {
+      "sha256": "7244681958e2d608666011439e56736b6e726e4530d2f39452c34ecb65cceb8a",
+      "bytes": 882325,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.public_sector_services.zh-Hant.jsonl": {
+      "sha256": "252139a8de144530899ff37267cb2b95d7d09ef633b735de167ac7ddde6f9522",
+      "bytes": 882346,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.retail_ecommerce.en.jsonl": {
+      "sha256": "50e671a975c15f9759116713efb66dfb2b1aeafa9c6d7cb677972843e537baa6",
+      "bytes": 938527,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.retail_ecommerce.zh-Hans.jsonl": {
+      "sha256": "3c6bdcfe943beb0518987cae53c947f85eb4e02db329fe5004672b7c28d3405e",
+      "bytes": 795675,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.retail_ecommerce.zh-Hant.jsonl": {
+      "sha256": "e04be1c426a586f89273cf8ec0bf7dcf110d4c0ffbff5e25be589f404ff35f57",
+      "bytes": 795819,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.supply_chain_logistics.en.jsonl": {
+      "sha256": "e01f55088f94cedb6bf0980136419182d22145daa7b958d7ac08aca19931aa4a",
+      "bytes": 898185,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.supply_chain_logistics.zh-Hans.jsonl": {
+      "sha256": "fffb86ee1871daf87aca5739f89a493bb3d17db51b1b9765ff7a25b151b3fa2a",
+      "bytes": 780459,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.supply_chain_logistics.zh-Hant.jsonl": {
+      "sha256": "b8f949906b4a1bd5928cb0d45874712b4a2f3c40240700f2fa9ac34ce928ac1a",
+      "bytes": 781371,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.telecom_network_ops.en.jsonl": {
+      "sha256": "9f1fcaf290e2a887cf7adf7615324ffdc2a40d75e31846999a4a5636940ee8ad",
+      "bytes": 993998,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "en_en": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.telecom_network_ops.zh-Hans.jsonl": {
+      "sha256": "510c734f577d97235ad0a4dae168399e4233569192c6d2c2bb7dca0a9e00c35e",
+      "bytes": 862037,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hans_zh-Hans": 500
+      }
+    },
+    "train/nearmiss/30-nearmiss.telecom_network_ops.zh-Hant.jsonl": {
+      "sha256": "75d74438b26e51783c207acbca8a39d72a7f8449799ecb0fe401f547892a34f5",
+      "bytes": 862679,
+      "records": 500,
+      "questions": 1500,
+      "split": "train",
+      "origin": "custom",
+      "per_combo": {
+        "zh-Hant_zh-Hant": 500
       }
     },
     "train/posttrain/00-llm.agent_tool_governance.en.jsonl": {
@@ -5174,8 +5603,8 @@
   "per_category": {
     "agent_tool_governance": {
       "train": {
-        "records": 51873,
-        "questions": 155619
+        "records": 53373,
+        "questions": 160119
       },
       "test": {
         "records": 8535,
@@ -5188,8 +5617,8 @@
     },
     "content_safety_ops": {
       "train": {
-        "records": 46026,
-        "questions": 138078
+        "records": 47526,
+        "questions": 142578
       },
       "test": {
         "records": 7575,
@@ -5202,8 +5631,8 @@
     },
     "embodied_game_ops": {
       "train": {
-        "records": 45990,
-        "questions": 137970
+        "records": 47490,
+        "questions": 142470
       },
       "test": {
         "records": 7650,
@@ -5216,8 +5645,8 @@
     },
     "energy_utilities": {
       "train": {
-        "records": 45978,
-        "questions": 137934
+        "records": 47478,
+        "questions": 142434
       },
       "test": {
         "records": 7635,
@@ -5230,8 +5659,8 @@
     },
     "finance_insurance": {
       "train": {
-        "records": 45987,
-        "questions": 137961
+        "records": 47487,
+        "questions": 142461
       },
       "test": {
         "records": 7605,
@@ -5244,8 +5673,8 @@
     },
     "healthcare_logistics": {
       "train": {
-        "records": 46014,
-        "questions": 138042
+        "records": 47514,
+        "questions": 142542
       },
       "test": {
         "records": 7635,
@@ -5258,8 +5687,8 @@
     },
     "hr_recruiting": {
       "train": {
-        "records": 45993,
-        "questions": 137979
+        "records": 47493,
+        "questions": 142479
       },
       "test": {
         "records": 7980,
@@ -5272,8 +5701,8 @@
     },
     "life_sciences_lab": {
       "train": {
-        "records": 46026,
-        "questions": 138078
+        "records": 47526,
+        "questions": 142578
       },
       "test": {
         "records": 7515,
@@ -5286,8 +5715,8 @@
     },
     "manufacturing_quality": {
       "train": {
-        "records": 46008,
-        "questions": 138024
+        "records": 47508,
+        "questions": 142524
       },
       "test": {
         "records": 7515,
@@ -5300,8 +5729,8 @@
     },
     "public_sector_services": {
       "train": {
-        "records": 45936,
-        "questions": 137808
+        "records": 47436,
+        "questions": 142308
       },
       "test": {
         "records": 7635,
@@ -5314,8 +5743,8 @@
     },
     "retail_ecommerce": {
       "train": {
-        "records": 45960,
-        "questions": 137880
+        "records": 47460,
+        "questions": 142380
       },
       "test": {
         "records": 7590,
@@ -5328,8 +5757,8 @@
     },
     "supply_chain_logistics": {
       "train": {
-        "records": 45918,
-        "questions": 137754
+        "records": 47418,
+        "questions": 142254
       },
       "test": {
         "records": 7560,
@@ -5342,8 +5771,8 @@
     },
     "telecom_network_ops": {
       "train": {
-        "records": 46056,
-        "questions": 138168
+        "records": 47556,
+        "questions": 142668
       },
       "test": {
         "records": 7635,
@@ -5373,15 +5802,15 @@
       "zh-Hant_zh-Hant": 6671
     },
     "train": {
-      "en_en": 43425,
+      "en_en": 49925,
       "en_zh-Hans": 78915,
       "en_zh-Hant": 78915,
       "zh-Hans_en": 78915,
-      "zh-Hans_zh-Hans": 43425,
+      "zh-Hans_zh-Hans": 49925,
       "zh-Hans_zh-Hant": 78915,
       "zh-Hant_en": 78915,
       "zh-Hant_zh-Hans": 78915,
-      "zh-Hant_zh-Hant": 43425
+      "zh-Hant_zh-Hant": 49925
     }
   },
   "quota": {

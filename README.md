@@ -4,10 +4,10 @@
 
 | 项目 | 内容 |
 |---|---|
-| 版本 | `2026.11.06.2` |
-| 更新时间 | 2026-11-06 00:22 (+08:00) |
+| 版本 | `2026.11.06.3` |
+| 更新时间 | 2026-11-06 03:00 (+08:00) |
 | 语言 | `zh-Hans` 简体中文、`zh-Hant` 繁体中文、`en` 英文 |
-| 规模 | **154,983 条记录 / 464,949 题**（三语合计），13 个垂类，468 个文件，约 1231 MB |
+| 规模 | **154,983 条记录 / 464,949 题**（三语合计），13 个垂类，507 个文件，约 1263 MB |
 | 许可 | MIT |
 
 ## 数据量
@@ -48,6 +48,20 @@
 | `en` | 46,130 / 46,127 | 46,130 / 46,127 | 47,695 / 0 |
 <!-- combo-stats:end -->
 
+## 近似反例（`train/nearmiss/`）
+
+`30-nearmiss.<category>.<lang>.jsonl`：每条记录与单语分片**同案同标签**，只是 choice 题的
+`criteria` 里多了一个 `near_miss` 干扰项——它与正确选项语气相近，但案情里有明确相反的证据
+（生成时要求模型指出该证据原文，校验通过才收录）。
+
+| 项 | 数量 |
+|---|---:|
+| 覆盖垂类 | 13 |
+| 每垂类案例数 | 500 |
+| 三语记录数 | 19,500 |
+
+正确选项与 `labels` 完全不变，因此不破坏标签不变性；训练时可按需取用。
+
 ## 目录
 
 ```
@@ -55,6 +69,11 @@ train/               00-llm.<category>.<lang>.jsonl   预训练
 train/posttrain/     00-llm.<category>.<lang>.jsonl   后训练
 test/                00-llm.<category>.<lang>.jsonl   测试
 dev/                 00-llm.<category>.<lang>.jsonl   开发
+train/mix/           10-mix.<category>.<stateLang>_<questionLang>.jsonl   混合（6 组合）
+test/mix/            10-mix.<category>.<stateLang>_<questionLang>.jsonl   混合（6 组合）
+train/adv/           20-adv-lang.<category>.<stateLang>_<questionLang>.jsonl  语言对抗
+test/adv/            20-adv-lang.<category>.<stateLang>_<questionLang>.jsonl  语言对抗
+train/nearmiss/      30-nearmiss.<category>.<lang>.jsonl  近似反例
 ```
 
 13 个垂类：数据治理与 Agent 运维（`agent_tool_governance`）、内容安全与合规（`content_safety_ops`）、游戏与具身智能（`embodied_game_ops`）、能源与公用事业（`energy_utilities`）、金融与保险（`finance_insurance`）、医疗后勤（探索性）（`healthcare_logistics`）、人力资源与招聘（`hr_recruiting`）、生命科学（实验自动化）（`life_sciences_lab`）、制造业与工业质检（`manufacturing_quality`）、公共部门与政务服务（`public_sector_services`）、零售与电商（`retail_ecommerce`）、供应链与物流（`supply_chain_logistics`）、电信与网络运维（`telecom_network_ops`）。
