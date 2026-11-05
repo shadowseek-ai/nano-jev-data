@@ -90,8 +90,44 @@ python scripts/check_quota.py --dir .
 ```
 
 `topup_pretrain.py` 只从环境变量读取 `LLM_API_BASE` / `LLM_API_KEY` / `LLM_MODEL`，
-密钥不落盘；生成、翻译、合并都按内容指纹去重，并保留 `artifacts/llm/topup/` 作为
+密钥不落盘；生成、翻译、合并都按内容指纹去重，并保留 `artifacts/llm/splits/` 作为
 可恢复的中间产物（该目录不入库）。
+
+## 案情中心三 split 流水线（当前在用）
+
+```bash
+# 1. 按“文件缺口”生成源语言（含 dev），2 并发 × 4 条
+python scripts/topup_splits.py --generate --from-files --rounds 8 --work artifacts/llm/splits
+
+# 2. 繁中本地转换（OpenCC，零成本）
+python scripts/convert_hant.py
+
+# 3. 英文走 Edge 翻译（免费，2 并发 × 4 条，全局限流）
+python scripts/topup_splits.py --translate --work artifacts/llm/splits
+
+# 4. 补译被校验拒绝的样本（Edge 放宽 -> LLM 兜底）
+python scripts/repair_en.py --work artifacts/llm/splits
+
+# 5. 合并进 train/test/dev/posttrain（三语同进同出，写入 case_id/question_lang/source_lang）
+python scripts/topup_splits.py --merge --work artifacts/llm/splits
+
+# 6. 渲染残留占位符 + 去重 + 简体纯度
+python scripts/render_placeholders.py
+python scripts/clean_splits.py
+
+# 7. 派生混合分片与语言对抗子集（零 LLM 成本）
+python scripts/build_mixed.py --adversarial
+
+# 8. 校验、冻结、更新 README
+python scripts/topup_verify.py
+python scripts/check_quota.py --dir .
+python scripts/freeze_manifest.py
+python scripts/update_readme_stats.py
+```
+
+旧数据改造（一次性）：`rewrite_legacy.py` 渲染占位符并补 `case_id`；
+`rebuild_legacy_aligned.py` 以 zh-Hans 为源重建 zh-Hant/en，使三语条数严格一致。
+
 
 ## 脚本职责
 
@@ -112,7 +148,19 @@ python scripts/check_quota.py --dir .
 | `topup_pretrain.py` | 按 3000 配额生成源语言、翻译、合并与计数报告 |
 | `topup_translate.py` | 与生成并行的增量翻译（英文 LLM、繁中 OpenCC） |
 | `topup_audit.py` | 审计 topup 种子的标签域、语言、占位符/数字与三语对齐 |
-| `freeze_manifest.py` | 只扫描 `train/test/dev` 重新生成 `MANIFEST.json` |
+| `freeze_manifest.py` | 只扫描 `train/test/dev` 重新生成 `MANIFEST.json`（含 `per_combo`） |
+| `topup_splits.py` | 三 split（train/test/post/dev）统一补齐：生成、翻译、合并，三语同进同出 |
+| `convert_hant.py` | 把种子里的简体源转成繁体（OpenCC `s2twp`），不占用翻译 API |
+| `edge_translate.py` | Edge 翻译客户端（免费），全局限流 + 连续失败冷却 |
+| `repair_en.py` | 补译被校验拒绝的英文：Edge 放宽校验 → LLM 批量兜底 |
+| `repair_en_final.py` | 逐条 LLM 修复（带缺失 token 回灌），作为最后一档 |
+| `build_mixed.py` | 由 `case_id` 对齐派生混合分片与语言对抗子集 |
+| `render_placeholders.py` | 把 `{date}`/`{ticket}` 等模板占位符按 `case_id` 确定性渲染 |
+| `clean_splits.py` | 跨 split 去重（整案三语一起删）+ 简体纯度规整 |
+| `rewrite_legacy.py` | 旧数据一次性改造：渲染占位符、补 `case_id`/`question_lang`/`source_lang` |
+| `rebuild_legacy_aligned.py` | 以 zh-Hans 为源重建 zh-Hant/en，使旧数据三语条数严格一致 |
+| `case_meta.py` | 占位符渲染与 `case_id` 规则的公共库 |
+| `update_readme_stats.py` | 刷新 README 的版本/规模/语言×split/组合统计表 |
 
 ## 目录约定
 
