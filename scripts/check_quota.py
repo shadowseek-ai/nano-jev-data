@@ -1,12 +1,12 @@
-"""核查三语言 × 13 垂类的分项配额。
+"""核查三语言 × 13 垂类的分项配额（按记录数）。
 
 口径（2026-11-05 需求）：
-- 训练集：每垂类每语言 >= 3000 条记录（每条 3 题，即 >= 9000 题）
-- 测试集：每垂类每语言 >= 500 题（约 167 条记录）
-- 后训练集：每垂类每语言 >= 300 题（= 100 条记录）
+- 预训练：每垂类每语言 >= 3000 条记录（每条 1 个 state + 3 道题，即 >= 9000 题）
+- 测试集：每垂类每语言 >=  500 条记录（>= 1500 题）
+- 后训练：每垂类每语言 >=  300 条记录（>=  900 题）
 - 开发集：每垂类每语言 >= 100 条记录（上一轮口径，作为参考项）
 
-用法：py artifacts/llm/check_quota.py [--dir data]
+用法：python scripts/check_quota.py --dir .
 """
 
 from __future__ import annotations
@@ -18,8 +18,8 @@ from pathlib import Path
 
 LANGS = ("zh-Hans", "zh-Hant", "en")
 TRAIN_MIN_RECORDS = 3000
-TEST_MIN_QUESTIONS = 500
-POST_MIN_QUESTIONS = 300
+TEST_MIN_RECORDS = 500
+POST_MIN_RECORDS = 300
 DEV_MIN_RECORDS = 100
 QUESTIONS_PER_RECORD = 3
 
@@ -38,7 +38,7 @@ def count(folder: Path) -> Counter:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--dir", default="data")
+    parser.add_argument("--dir", default=".")
     args = parser.parse_args(argv)
     root = Path(args.dir)
     train = count(root / "train")
@@ -47,29 +47,37 @@ def main(argv: list[str] | None = None) -> int:
     dev = count(root / "dev")
     categories = sorted({key[0] for key in train})
     failures = []
-    print(f"{'category':<24}{'lang':<9}{'train':>7}{'test(Q)':>9}{'post(Q)':>9}{'dev':>6}")
+    print(f"{'category':<24}{'lang':<9}{'train':>7}{'test':>7}{'post':>7}{'dev':>6}   （记录数，括号内为题数）")
     for category in categories:
         for lang in LANGS:
             tr = train[(category, lang)]
-            te = test[(category, lang)] * QUESTIONS_PER_RECORD
-            po = post[(category, lang)] * QUESTIONS_PER_RECORD
+            te = test[(category, lang)]
+            po = post[(category, lang)]
             dv = dev[(category, lang)]
             flags = []
             if tr < TRAIN_MIN_RECORDS:
                 flags.append(f"train<{TRAIN_MIN_RECORDS}")
-            if te < TEST_MIN_QUESTIONS:
-                flags.append(f"test<{TEST_MIN_QUESTIONS}")
-            if po < POST_MIN_QUESTIONS:
-                flags.append(f"post<{POST_MIN_QUESTIONS}")
-
-            print(f"{category:<24}{lang:<9}{tr:>7}{te:>9}{po:>9}{dv:>6}  {' '.join(flags)}")
-            if any(f.split('<')[0] in {"train", "test", "post"} for f in flags):
+            if te < TEST_MIN_RECORDS:
+                flags.append(f"test<{TEST_MIN_RECORDS}")
+            if po < POST_MIN_RECORDS:
+                flags.append(f"post<{POST_MIN_RECORDS}")
+            print(
+                f"{category:<24}{lang:<9}{tr:>7}{te:>7}{po:>7}{dv:>6}   "
+                f"({tr * QUESTIONS_PER_RECORD}/{te * QUESTIONS_PER_RECORD}/{po * QUESTIONS_PER_RECORD})  {' '.join(flags)}"
+            )
+            if flags:
                 failures.append((category, lang, flags))
     print()
     for lang in LANGS:
         total_dev = sum(dev[(category, lang)] for category in categories)
         print(f"dev total {lang}: {total_dev} (requirement: >=100 per language, informational)")
-    print(f"categories={len(categories)} languages={len(LANGS)} violating={(len(failures))}")
+    worst_train = min((train[(c, l)] for c in categories for l in LANGS), default=0)
+    worst_test = min((test[(c, l)] for c in categories for l in LANGS), default=0)
+    worst_post = min((post[(c, l)] for c in categories for l in LANGS), default=0)
+    print(
+        f"categories={len(categories)} languages={len(LANGS)} violating={len(failures)} "
+        f"min(train/test/post)={worst_train}/{worst_test}/{worst_post}"
+    )
     return 0 if not failures else 1
 
 

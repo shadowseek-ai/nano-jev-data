@@ -13,6 +13,52 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
+LANGS = ("zh-Hans", "zh-Hant", "en")
+SPLITS = (("train", "预训练"), ("post", "后训练"), ("test", "测试"), ("dev", "开发"))
+CATEGORY_LABELS = {
+    "finance_insurance": "金融与保险",
+    "retail_ecommerce": "零售与电商",
+    "supply_chain_logistics": "供应链与物流",
+    "life_sciences_lab": "生命科学（实验自动化）",
+    "healthcare_logistics": "医疗后勤（探索性）",
+    "manufacturing_quality": "制造业与工业质检",
+    "energy_utilities": "能源与公用事业",
+    "telecom_network_ops": "电信与网络运维",
+    "public_sector_services": "公共部门与政务服务",
+    "hr_recruiting": "人力资源与招聘",
+    "agent_tool_governance": "数据治理与 Agent 运维",
+    "content_safety_ops": "内容安全与合规",
+    "embodied_game_ops": "游戏与具身智能",
+}
+
+
+def lang_split_questions() -> dict[str, dict[str, int]]:
+    """每种语言 × 每个 split 的题目数。"""
+    table = {lang: {split: 0 for split, _ in SPLITS} for lang in LANGS}
+    for split, _ in SPLITS:
+        folder = ROOT / ("train/posttrain" if split == "post" else split)
+        if not folder.exists():
+            continue
+        for path in sorted(folder.glob("*.jsonl")):
+            for line in path.open(encoding="utf-8"):
+                if not line.strip():
+                    continue
+                record = json.loads(line)
+                table[record.get("lang")][split] += len(record.get("questions", {}))
+    return table
+
+
+def lang_stats_block() -> str:
+    table = lang_split_questions()
+    totals = {split: sum(table[lang][split] for lang in LANGS) for split, _ in SPLITS}
+    lines = ["| 语言 | " + " | ".join(label for _, label in SPLITS) + " | 合计 |",
+             "|---|" + "---:|" * (len(SPLITS) + 1)]
+    for lang in LANGS:
+        total = sum(table[lang][split] for split, _ in SPLITS)
+        lines.append(f"| `{lang}` | " + " | ".join(f"{table[lang][split]:,}" for split, _ in SPLITS) + f" | {total:,} |")
+    lines.append("| **合计** | " + " | ".join(f"**{totals[split]:,}**" for split, _ in SPLITS) +
+                 f" | **{sum(totals.values()):,}** |")
+    return "\n".join(lines)
 
 
 def main() -> int:
@@ -62,8 +108,18 @@ def main() -> int:
     text = re.sub(r"\| 开发 \| `dev/` \|[^\n]*", rows["dev"], text)
     text = re.sub(
         r"语言分布（记录）：[^\n]*",
-        "语言分布（记录）：" + "、".join(f"`{lang}` {lang_records[lang]:,}" for lang in ("zh-Hans", "zh-Hant", "en")) + "。",
+        "语言分布（记录）：" + "、".join(f"`{lang}` {lang_records[lang]:,}" for lang in LANGS) + "。",
         text,
+    )
+    categories = sorted(CATEGORY_LABELS)
+    category_line = "、".join(f"{CATEGORY_LABELS[name]}（`{name}`）" for name in categories)
+    text = re.sub(r"13 个垂类：[^\n]*(?:\n[^\n]*)*?\n\n", f"13 个垂类：{category_line}。\n\n", text, count=1)
+    block = lang_stats_block()
+    text = re.sub(
+        r"(<!-- lang-stats:start -->)(.*?)(<!-- lang-stats:end -->)",
+        lambda m: f"{m.group(1)}\n{block}\n{m.group(3)}",
+        text,
+        flags=re.S,
     )
     README.write_text(text, encoding="utf-8", newline="\n")
     print(f"README 更新：{manifest['dataset_version']} records={total_records} questions={total_questions} files={len(files)}")
