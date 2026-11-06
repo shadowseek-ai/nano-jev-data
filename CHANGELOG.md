@@ -2,6 +2,39 @@
 
 本仓库的数据版本与 `MANIFEST.json` 的 `dataset_version` 保持一致。
 
+## 2026.11.06.5（按对抗需求重做 adv / nearmiss，新增 dev/mix）
+
+对应 `dataset-2026.11.06.3-audit.md` 与 `dataset-adversarial-requirements.md`。
+
+### 修掉的问题
+
+| 项 | 修前 | 修后 |
+|---|---|---|
+| `adv` 与 `mix` 键交集 | 236,736（完全重合） | **0** |
+| `adv` 内容 | 是 `mix` 的副本 | 三类真改写，内容指纹与 `mix` 无交集 |
+| `nearmiss` 同 case 标签 | 19,500 条全部相同 | **0**（全部翻转） |
+| 内容指纹重复（全库） | 1,570 | **0** |
+| train/test `case_id` 交叉 | 1（另含 posttrain/dev 共 14） | **0** |
+| `dev/mix` | 缺失 | **9,312 条**（6 组合 × 13 垂类） |
+
+### 对抗子集（按 `adv_type` 区分）
+
+| 类型 | 文件 | 规模 | 说明 |
+|---|---|---|---|
+| A 干扰项 | `10-advdist.*` | 19,500（train 15,600 + test 3,900） | 注入 1–3 句错误选项旁注，事实与标签不变；近义混淆 40%，位置三档均分 |
+| B 语言对抗 | `20-adv-lang.*` | 42,271（train 31,189 + test 7,796 + dev 3,286） | 判定线索换成另一语言原文 |
+| C 极性对照 | `12-advpol.*` | 24,804（**8,268** 个完整组） | C1 只否结论 / C2 只改事实 / C3 同向改，`pair_id` 串联 |
+| 近似反例 | `train/nearmiss/` | 11,439 | 改一个数字跨阈值，标签翻转 |
+
+新增字段：`adv_type`、`derived_from`、`pair_id`、`pair_role`、`adv_position`、`adv_injected`、`adv_similarity`、`adv_near_synonym`。
+
+### 其它
+
+- `MANIFEST.json` 增加 `adversarial` 段（按 split × `adv_type` × 语言/垂类给条数）。
+- 新增门禁脚本 `scripts/audit_derived.py`，一条命令校验上述全部验收项。
+- README 增加「对抗与派生子集」表与目录说明。
+- 语言对抗（B）与干扰项（A）建议进训练；极性对照（C）按文档作为诊断集，先不直接进训练。
+
 ## 2026.11.06.x（近似反例子集 §3.2）
 
 - 新增 `train/nearmiss/`：13 垂类 × 500 案例 × 3 语言 = **19,500 条**记录。

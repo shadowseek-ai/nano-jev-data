@@ -104,9 +104,21 @@ def main() -> int:
         per_category[category][split]["questions"] += entry["questions"]
 
     per_combo: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    adversarial: dict[str, dict[str, dict[str, int]]] = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
     for entry in files:
         for combo, count in entry.get("per_combo", {}).items():
             per_combo[entry["split"]][combo] += count
+    for path in sorted(ROOT.glob("train/adv/*.jsonl")) + sorted(ROOT.glob("test/adv/*.jsonl")) + sorted(
+            ROOT.glob("dev/adv/*.jsonl")) + sorted(ROOT.glob("train/nearmiss/*.jsonl")):
+        relative = path.relative_to(ROOT).as_posix()
+        split = split_of(relative)
+        for line in path.open(encoding="utf-8"):
+            if not line.strip():
+                continue
+            record = json.loads(line)
+            adv_type = record.get("adv_type") or record.get("style") or "unknown"
+            adversarial[split][adv_type][record.get("lang", "unknown")] += 1
+            adversarial[split][adv_type][f"category:{record.get('category')}"] += 1
 
     manifest = {
         "schema_version": 1,
@@ -121,6 +133,13 @@ def main() -> int:
         "files": {entry["path"]: {key: value for key, value in entry.items() if key != "path"} for entry in files},
         "per_category": {category: dict(stats) for category, stats in sorted(per_category.items())},
         "per_combo": {split: dict(sorted(combos.items())) for split, combos in sorted(per_combo.items())},
+        "adversarial": {
+            split: {
+                adv_type: dict(sorted(counts.items()))
+                for adv_type, counts in sorted(types.items())
+            }
+            for split, types in sorted(adversarial.items())
+        },
         "quota": {
             "train_records_per_category_language": TARGET_TRAIN_RECORDS,
             "train_questions_per_category": TARGET_TRAIN_RECORDS * 3,

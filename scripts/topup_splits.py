@@ -290,7 +290,11 @@ def merge(plan: dict, specs: dict, store: MultiStore, dry_run: bool = False) -> 
 
             # 同一案情三语必须同时写入，保证各语言条数严格一致。
             skipped = 0
+            # 上限 = max(现有条数, 该 split 配额)，避免合并时无限追加（占位符渲染后指纹会变）
+            cap = max(len(state["zh-Hans"]["lines"]), SPLIT_TARGET[split])
             for row in grouped.get((split, category, "zh-Hans"), []):
+                if len(state["zh-Hans"]["new"]) >= cap - len(state["zh-Hans"]["lines"]):
+                    break
                 task = tasks.get(row["task"])
                 if task is None:
                     skipped += 1

@@ -121,6 +121,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--splits", nargs="*", default=["train", "test"])
     parser.add_argument("--adversarial", action="store_true", help="同时生成语言对抗子集")
+    parser.add_argument("--per-combo", type=int, default=0, help="每个组合最多保留多少条（0=不限）")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args(argv)
 
@@ -152,15 +153,18 @@ def main(argv: list[str] | None = None) -> int:
         for (category, state_lang, question_lang), rows in sorted(mix_buffers.items()):
             mix_dir.mkdir(parents=True, exist_ok=True)
             path = mix_dir / f"10-mix.{category}.{state_lang}_{question_lang}.jsonl"
+            if args.per_combo:
+                rows = rows[: args.per_combo]
             with path.open("w", encoding="utf-8", newline="\n") as handle:
                 for row in rows:
                     handle.write(json.dumps(row, ensure_ascii=False) + "\n")
-        for (category, state_lang, question_lang), rows in sorted(adv_buffers.items()):
-            adv_dir.mkdir(parents=True, exist_ok=True)
-            path = adv_dir / f"20-adv-lang.{category}.{state_lang}_{question_lang}.jsonl"
-            with path.open("w", encoding="utf-8", newline="\n") as handle:
-                for row in rows:
-                    handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+        if args.adversarial:
+            for (category, state_lang, question_lang), rows in sorted(adv_buffers.items()):
+                adv_dir.mkdir(parents=True, exist_ok=True)
+                path = adv_dir / f"20-adv-lang.{category}.{state_lang}_{question_lang}.jsonl"
+                with path.open("w", encoding="utf-8", newline="\n") as handle:
+                    for row in rows:
+                        handle.write(json.dumps(row, ensure_ascii=False) + "\n")
     return 0
 
 
