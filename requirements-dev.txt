@@ -1,0 +1,3 @@
+# CI 依赖（GitHub Actions 用；生成/翻译另需密钥，见 scripts/README.md）
+openai>=1.40
+opencc-python-reimplemented>=0.1.7

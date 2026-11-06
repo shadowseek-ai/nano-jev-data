@@ -15,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 README = ROOT / "README.md"
 LANGS = ("zh-Hans", "zh-Hant", "en")
 SPLITS = (("train", "预训练"), ("post", "后训练"), ("test", "测试"), ("dev", "开发"))
+SPLIT_DIRS = {"train": "train", "post": "train/posttrain", "test": "test", "dev": "dev"}
 CATEGORY_LABELS = {
     "finance_insurance": "金融与保险",
     "retail_ecommerce": "零售与电商",
@@ -61,41 +62,78 @@ def lang_stats_block() -> str:
     return "\n".join(lines)
 
 
-def combo_stats_block() -> str:
-    """state 语言 × 问题语言 的组合条数（含混合分片与对抗子集）。"""
+def _combo_counts() -> tuple[dict, dict, dict]:
+    """返回 (混合, 语言对抗, 其他对抗) 三类计数。
+
+    混合与语言对抗只有**跨语言**组合（对角线恒为 0）；干扰项 / 极性 / 近似反例
+    是**按语言**的子集，不参与 state×question 矩阵。
+    """
     langs = LANGS
-    combine = {lang: {q: 0 for q in langs} for lang in langs}
-    adv = {lang: {q: 0 for q in langs} for lang in langs}
-    for split in ("train", "test", "dev"):
-        folder = ROOT / split
+    mix = {lang: {q: 0 for q in langs} for lang in langs}
+    lang_adv = {lang: {q: 0 for q in langs} for lang in langs}
+    per_lang: dict[str, dict[str, int]] = {}
+    for split in ("train", "post", "test", "dev"):
+        folder = ROOT / SPLIT_DIRS[split]
         if not folder.exists():
             continue
-        for path in folder.glob("00-llm.*.jsonl"):
-            rel = path.relative_to(ROOT).as_posix()
-            if rel.startswith(("train/mix", "train/adv", "test/mix", "test/adv")):
-                continue
+        for path in sorted((folder / "mix").glob("*.jsonl")) if (folder / "mix").exists() else []:
+            for line in path.open(encoding="utf-8"):
+                if line.strip():
+                    record = json.loads(line)
+                    mix[record["lang"]][record["question_lang"]] += 1
+        for path in sorted((folder / "adv").glob("*.jsonl")) if (folder / "adv").exists() else []:
             for line in path.open(encoding="utf-8"):
                 if not line.strip():
                     continue
                 record = json.loads(line)
-                combine[record.get("lang")][record.get("question_lang", record.get("lang"))] += 1
-        for path in list((ROOT / split / "mix").glob("*.jsonl")) if (ROOT / split / "mix").exists() else []:
-            for line in path.open(encoding="utf-8"):
-                if line.strip():
-                    record = json.loads(line)
-                    combine[record["lang"]][record["question_lang"]] += 1
-        for path in list((ROOT / split / "adv").glob("*.jsonl")) if (ROOT / split / "adv").exists() else []:
-            for line in path.open(encoding="utf-8"):
-                if line.strip():
-                    record = json.loads(line)
-                    adv[record["lang"]][record["question_lang"]] += 1
-    header = "| state 语言 \\ 问题语言 | " + " | ".join(f"`{q}`" for q in langs) + " |"
-    lines = [header, "|---|" + "---:|" * len(langs)]
-    for state_lang in langs:
+                if record.get("adv_type") == "lang":
+                    lang_adv[record["lang"]][record["question_lang"]] += 1
+                else:
+                    bucket = per_lang.setdefault(record.get("adv_type") or "unknown", {})
+                    bucket[record["lang"]] = bucket.get(record["lang"], 0) + 1
+    for path in sorted((ROOT / "train" / "nearmiss").glob("*.jsonl")):
+        for line in path.open(encoding="utf-8"):
+            if line.strip():
+                record = json.loads(line)
+                bucket = per_lang.setdefault("near-miss", {})
+                bucket[record["lang"]] = bucket.get(record["lang"], 0) + 1
+    return mix, lang_adv, per_lang
+
+
+def _matrix(counter: dict, label: str) -> str:
+    header = f"| {label} \\\\ 问题语言 | " + " | ".join(f"`{q}`" for q in LANGS) + " |"
+    lines = [header, "|---|" + "---:|" * len(LANGS)]
+    for state_lang in LANGS:
         cells = []
-        for q in langs:
-            cells.append(f"{combine[state_lang][q]:,} / {adv[state_lang][q]:,}")
+        for q in LANGS:
+            value = counter[state_lang][q]
+            cells.append("—" if state_lang == q or value == 0 else f"{value:,}")
         lines.append(f"| `{state_lang}` | " + " | ".join(cells) + " |")
+    return "\n".join(lines)
+
+
+def combo_stats_block() -> str:
+    mix, _, _ = _combo_counts()
+    return _matrix(mix, "state 语言")
+
+
+def lang_adv_block() -> str:
+    _, lang_adv, _ = _combo_counts()
+    return _matrix(lang_adv, "state 语言")
+
+
+def adv_type_block() -> str:
+    _, _, per_lang = _combo_counts()
+    labels = {"distractor": "A 干扰项", "polarity": "C 极性对照", "near-miss": "近似反例"}
+    lines = ["| 类型 | " + " | ".join(f"`{lang}`" for lang in LANGS) + " | 合计 |",
+             "|---|" + "---:|" * (len(LANGS) + 1)]
+    for adv_type in ("distractor", "polarity", "near-miss"):
+        counts = per_lang.get(adv_type, {})
+        if not counts:
+            continue
+        total = sum(counts.values())
+        lines.append(f"| {labels[adv_type]} | " +
+                     " | ".join(f"{counts.get(lang, 0):,}" for lang in LANGS) + f" | {total:,} |")
     return "\n".join(lines)
 
 
@@ -159,13 +197,18 @@ def main() -> int:
         text,
         flags=re.S,
     )
-    combo_block = combo_stats_block()
-    text = re.sub(
-        r"(<!-- combo-stats:start -->)(.*?)(<!-- combo-stats:end -->)",
-        lambda m: f"{m.group(1)}\n{combo_block}\n{m.group(3)}",
-        text,
-        flags=re.S,
-    )
+    blocks = {
+        "combo-stats": combo_stats_block(),
+        "combo-lang-stats": lang_adv_block(),
+        "adv-type-stats": adv_type_block(),
+    }
+    for marker, block in blocks.items():
+        text = re.sub(
+            rf"(<!-- {marker}:start -->)(.*?)(<!-- {marker}:end -->)",
+            lambda m, b=block: f"{m.group(1)}\n{b}\n{m.group(3)}",
+            text,
+            flags=re.S,
+        )
     README.write_text(text, encoding="utf-8", newline="\n")
     print(f"README 更新：{manifest['dataset_version']} records={total_records} questions={total_questions} files={len(files)}")
     return 0

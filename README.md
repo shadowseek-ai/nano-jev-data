@@ -4,10 +4,10 @@
 
 | 项目 | 内容 |
 |---|---|
-| 版本 | `2026.11.06.6` |
-| 更新时间 | 2026-11-06 12:43 (+08:00) |
+| 版本 | `2026.11.06.9` |
+| 更新时间 | 2026-11-06 14:51 (+08:00) |
 | 语言 | `zh-Hans` 简体中文、`zh-Hant` 繁体中文、`en` 英文 |
-| 规模 | **154,932 条记录 / 464,796 题**（三语合计），13 个垂类，819 个文件，约 930 MB |
+| 规模 | **154,932 条记录 / 464,796 题**（三语合计），13 个垂类，897 个文件，约 974 MB |
 | 许可 | MIT |
 
 ## 数据量
@@ -36,17 +36,39 @@
 
 ## 每组合条数（state 语言 × 问题语言）
 
-同一案情在三种语言下共用 `case_id`，因此可零成本派生跨语言组合样本；
-`train/mix/`、`test/mix/` 存放混合分片，`train/adv/`、`test/adv/` 存放语言对抗子集。
-表中每格为 **混合条数 / 对抗条数**（含 train、test、dev 三个 split 的合计）。
+同一案情在三种语言下共用 `case_id`，因此跨语言组合可零成本派生。
+混合与语言对抗**只存在跨语言组合**（对角线恒为「—」）；干扰项 / 极性 / 近似反例是
+**按语言**的子集，见下一张表。以下均为 train + test + dev 三个 split 的合计。
+
+### 混合分片（`train/mix/`、`train/posttrain/mix/`、`test/mix/`、`dev/mix/`）
 
 <!-- combo-stats:start -->
-| state 语言 \ 问题语言 | `zh-Hans` | `zh-Hant` | `en` |
+| state 语言 \\ 问题语言 | `zh-Hans` | `zh-Hant` | `en` |
 |---|---:|---:|---:|
-| `zh-Hans` | 47,678 / 14,768 | 47,678 / 6,962 | 47,678 / 7,466 |
-| `zh-Hant` | 47,678 / 6,814 | 47,678 / 14,768 | 47,678 / 7,452 |
-| `en` | 47,678 / 6,735 | 47,678 / 6,842 | 47,678 / 14,768 |
+| `zh-Hans` | — | 51,644 | 51,644 |
+| `zh-Hant` | 51,644 | — | 51,644 |
+| `en` | 51,644 | 51,644 | — |
 <!-- combo-stats:end -->
+
+### 语言对抗（`train/adv/20-adv-lang.*`、`test/adv/`、`dev/adv/`）
+
+<!-- combo-lang-stats:start -->
+| state 语言 \\ 问题语言 | `zh-Hans` | `zh-Hant` | `en` |
+|---|---:|---:|---:|
+| `zh-Hans` | — | 6,962 | 7,466 |
+| `zh-Hant` | 6,814 | — | 7,452 |
+| `en` | 6,735 | 6,842 | — |
+<!-- combo-lang-stats:end -->
+
+### 按语言的对抗子集
+
+<!-- adv-type-stats:start -->
+| 类型 | `zh-Hans` | `zh-Hant` | `en` | 合计 |
+|---|---:|---:|---:|---:|
+| A 干扰项 | 6,500 | 6,500 | 6,500 | 19,500 |
+| C 极性对照 | 8,268 | 8,268 | 8,268 | 24,804 |
+| 近似反例 | 3,813 | 3,813 | 3,813 | 11,439 |
+<!-- adv-type-stats:end -->
 
 ## 对抗与派生子集
 
@@ -99,6 +121,7 @@ train/posttrain/     00-llm.<category>.<lang>.jsonl   后训练
 test/                00-llm.<category>.<lang>.jsonl   测试
 dev/                 00-llm.<category>.<lang>.jsonl   开发
 train/mix/           10-mix.<category>.<stateLang>_<questionLang>.jsonl      混合（6 组合）
+train/posttrain/mix/ 10-mix.<category>.<stateLang>_<questionLang>.jsonl      后训练混合（6 组合）
 test/mix/            10-mix.<category>.<stateLang>_<questionLang>.jsonl      混合（6 组合）
 dev/mix/             10-mix.<category>.<stateLang>_<questionLang>.jsonl      混合（6 组合，早停用）
 train/adv/           10-advdist.<category>.<lang>.jsonl                      类型 A 干扰项

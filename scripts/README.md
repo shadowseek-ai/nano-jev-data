@@ -154,13 +154,34 @@ python scripts/update_readme_stats.py
 | `edge_translate.py` | Edge 翻译客户端（免费），全局限流 + 连续失败冷却 |
 | `repair_en.py` | 补译被校验拒绝的英文：Edge 放宽校验 → LLM 批量兜底 |
 | `repair_en_final.py` | 逐条 LLM 修复（带缺失 token 回灌），作为最后一档 |
-| `build_mixed.py` | 由 `case_id` 对齐派生混合分片与语言对抗子集 |
+| `build_mixed.py` | 由 `case_id` 对齐派生混合分片（`train` / `post` / `test` / `dev` 各 6 组合） |
+| `build_adversarial.py` | 类型 B 语言对抗：把判定句换成另一语言原文，`adv_type="lang"` |
+| `build_distractor.py` | 类型 A 干扰项：注入错误选项旁注，事实与标签不变，`adv_type="distractor"` |
+| `build_polarity.py` | 类型 C 极性对照：C1 只否结论 / C2 只改事实 / C3 同向改，`adv_type="polarity"` |
+| `gen_nearmiss_flip.py` | 用 LLM 找「改一个数字就翻盘」的位置并给出翻转后标签（带规则校验） |
+| `build_nearmiss_flip.py` | 把翻盘样本落成近似反例子集（`case_id` 加 `-nm`，标签翻转） |
+| `audit_derived.py` | **派生/对抗子集门禁**：键交集、规模、标签关系、指纹唯一、case_id 交叉、占位符 |
+| `dedupe_files.py` | 文件内去重（按 `case_id`+`lang`+`style`+`pair_role`） |
+| `drop_leaks.py` | 删除跨 split 重复的案情（整案三语一起删） |
+| `move_cases.py` | 把案情从 train 整体搬到 test，补缺口且不产生泄漏 |
+| `scan_secrets.py` | 扫描**全 git 历史对象**，确认无密钥值/令牌/私钥入库 |
+| `release_notes.py` | 从 `MANIFEST.json` 生成 Release 说明，避免手写数字漂移 |
 | `render_placeholders.py` | 把 `{date}`/`{ticket}` 等模板占位符按 `case_id` 确定性渲染 |
 | `clean_splits.py` | 跨 split 去重（整案三语一起删）+ 简体纯度规整 |
 | `rewrite_legacy.py` | 旧数据一次性改造：渲染占位符、补 `case_id`/`question_lang`/`source_lang` |
 | `rebuild_legacy_aligned.py` | 以 zh-Hans 为源重建 zh-Hant/en，使旧数据三语条数严格一致 |
 | `case_meta.py` | 占位符渲染与 `case_id` 规则的公共库 |
-| `update_readme_stats.py` | 刷新 README 的版本/规模/语言×split/组合统计表 |
+| `update_readme_stats.py` | 刷新 README 的版本/规模/语言×split/组合/对抗统计表 |
+
+## CI（GitHub Actions）
+
+| 工作流 | 触发 | 作用 |
+|---|---|---|
+| `.github/workflows/dataset-gate.yml` | push `master`、PR、手动 | 跑 `topup_verify` / `check_quota` / `audit_derived` / `freeze_manifest --dry-run`，并校验 README 统计表与数据一致；另有全历史密钥扫描 job |
+| `.github/workflows/release.yml` | 手动 | 用当前 master 删除并重建 `nano-jev-data` release，说明由 `release_notes.py` 生成 |
+
+CI 依赖见 `requirements-dev.txt`（`openai`、`opencc-python-reimplemented`）。CI 不需要任何密钥：
+`topup_pretrain.client()` 是延迟创建的，只在校验脚本不调用 LLM 时不会触发。
 
 ## 目录约定
 

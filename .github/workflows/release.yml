@@ -1,0 +1,47 @@
+name: 重建 nano-jev-data Release
+
+# 只在手动触发：删除同名 release 与 tag，再用当前 master 重建。
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 目标分支或 commit（默认 master）
+        required: false
+        default: master
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: 删除并重建 release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TAG: nano-jev-data
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: 生成 release 说明
+        run: python scripts/release_notes.py --out NOTES.md
+      - name: 删除旧 release 与 tag
+        run: |
+          set +e
+          gh release delete "$TAG" --yes --cleanup-tag
+          git push origin ":refs/tags/$TAG" || true
+          exit 0
+      - name: 创建新 release
+        run: |
+          gh release create "$TAG" \
+            --target "${{ inputs.ref }}" \
+            --title "$TAG" \
+            --notes-file NOTES.md \
+            --latest
+      - name: 输出结果
+        run: gh release view "$TAG" --json tagName,targetCommitish,url --jq '"tag=\(.tagName) target=\(.targetCommitish) url=\(.url)"'

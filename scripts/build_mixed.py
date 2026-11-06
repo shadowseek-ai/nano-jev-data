@@ -29,6 +29,13 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import case_meta  # noqa: E402
 
 LANGS = ("zh-Hans", "zh-Hant", "en")
+SPLIT_DIRS = {
+    "train": "train",
+    "post": "train/posttrain",
+    "test": "test",
+    "dev": "dev",
+}
+SPLIT_LABEL = {"train": "train", "post": "train", "test": "test", "dev": "dev"}
 SENT_SPLIT = {"zh-Hans": re.compile(r"(?<=[。；！？\n])"), "zh-Hant": re.compile(r"(?<=[。；！？\n])"),
               "en": re.compile(r"(?<=[.;!?\n])\s*")}
 NUM = re.compile(r"\d")
@@ -126,7 +133,11 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     for split in args.splits:
-        source_dir = ROOT / split
+        if split not in SPLIT_DIRS:
+            print(f"跳过未知 split: {split}")
+            continue
+        source_dir = ROOT / SPLIT_DIRS[split]
+        label = SPLIT_LABEL[split]
         if not source_dir.exists():
             continue
         data = load_split(source_dir)
@@ -142,9 +153,9 @@ def main(argv: list[str] | None = None) -> int:
                 aligned_cases += 1
                 for state_lang, question_lang in combos(by_lang):
                     mix_buffers[(category, state_lang, question_lang)].append(
-                        mixed_record(by_lang, state_lang, question_lang, split))
+                        mixed_record(by_lang, state_lang, question_lang, label))
                     if args.adversarial:
-                        adv = adversarial_record(by_lang, state_lang, question_lang, split)
+                        adv = adversarial_record(by_lang, state_lang, question_lang, label)
                         if adv:
                             adv_buffers[(category, state_lang, question_lang)].append(adv)
         print(f"{split}: 对齐案情 {aligned_cases}，混合组合文件 {len(mix_buffers)}，对抗文件 {len(adv_buffers)}")

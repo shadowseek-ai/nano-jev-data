@@ -46,7 +46,8 @@ def load(pattern: str) -> list[tuple[str, dict]]:
 def main() -> int:
     problems: list[str] = []
 
-    mix = load("train/mix/*.jsonl") + load("test/mix/*.jsonl") + load("dev/mix/*.jsonl")
+    mix = (load("train/mix/*.jsonl") + load("train/posttrain/mix/*.jsonl")
+           + load("test/mix/*.jsonl") + load("dev/mix/*.jsonl"))
     adv = load("train/adv/*.jsonl") + load("test/adv/*.jsonl") + load("dev/adv/*.jsonl")
     near = load("train/nearmiss/*.jsonl")
     single = (load("train/00-llm.*.jsonl") + load("test/00-llm.*.jsonl") + load("dev/00-llm.*.jsonl")

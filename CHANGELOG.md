@@ -2,6 +2,21 @@
 
 本仓库的数据版本与 `MANIFEST.json` 的 `dataset_version` 保持一致。
 
+## 2026.11.06.8（后训练混合分片 + CI 门禁）
+
+- **新增 `train/posttrain/mix/`**：后训练集此前只有单语分片，导致无法按「混合口径」做后训练；
+  现与 `train/mix/` 同构，6 组合 × 13 垂类，每个组合 **3,966** 条，共 23,796 条。
+- **新增 CI**：`.github/workflows/dataset-gate.yml`（push/PR 自动跑结构、配额、对抗子集、
+  MANIFEST 与 README 一致性校验，外带全历史密钥扫描）；
+  `.github/workflows/release.yml`（手动删除并重建 `nano-jev-data` release）。
+- **新增门禁脚本**：`audit_derived.py`（派生/对抗子集全部验收项）、`scan_secrets.py`（全历史扫描）、
+  `release_notes.py`（Release 说明由 MANIFEST 生成）、`dedupe_files.py`、`drop_leaks.py`、`move_cases.py`。
+- **移除无效文件**：删除旧实现 `scripts/gen_nearmiss.py`、`scripts/build_nearmiss.py`——
+  它们生成的是「选项级干扰项当作反例」的副本，已被审计判定为无效数据，避免误用回归。
+- README 的「每组合条数」拆成三张表：混合矩阵、语言对抗矩阵、按语言的对抗子集；
+  对角线标「—」（同语言不适用），修正此前把单语记录与 A/C 类混算进对角格的问题。
+- 冻结版本 `2026.11.06.8`。
+
 ## 2026.11.06.5（按对抗需求重做 adv / nearmiss，新增 dev/mix）
 
 对应 `dataset-2026.11.06.3-audit.md` 与 `dataset-adversarial-requirements.md`。
